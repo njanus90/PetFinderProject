@@ -58,7 +58,11 @@ public class InDepthPostFragment extends Fragment {
 
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);
-        textView30.setText(mPost.status);
+        if(mPost.status.equals("true")) {
+            textView30.setText("FOUND");
+        } else {
+            textView30.setText("LOST");
+        }
         return view;
     }
 }
