@@ -1,7 +1,7 @@
 package com.example.petfinderproject;
 
 import android.widget.ImageView;
-
+//this is the class that stores the posts of the pet lost or found
 public class PetPost {
     //Lost or found ==  true or false
 
