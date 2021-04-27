@@ -76,7 +76,7 @@ public class MyPostsFragment extends Fragment {
                 //Log.d(TAG, value.getDocuments().get(0).get("PetName").toString());
                 for(QueryDocumentSnapshot doc: value) {
 
-                    posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),doc.get("User").toString(),doc.get("details").toString(),null));
+                    posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),doc.get("User").toString(),doc.get("details").toString(),null,null,null));
                 }
                 adapter.notifyDataSetChanged();
             }

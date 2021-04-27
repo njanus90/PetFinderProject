@@ -156,8 +156,10 @@ public class HomeFragment extends Fragment {
                                         String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
                                         String UserId = task.getResult().getDocuments().get(i).get("User").toString();
                                         String details = task.getResult().getDocuments().get(i).get("details").toString();
+                                        //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
+                                        //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
 
-                                        posts.add(new PetPost(lost, petName ,UserId,details,null));
+                                        posts.add(new PetPost(lost, petName ,UserId,details,null,null,null));
                                     }
                                     adapter.notifyDataSetChanged();
                                 }
