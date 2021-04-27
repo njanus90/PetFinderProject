@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ScrollView;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,7 +82,6 @@ public class HomeFragment extends Fragment {
 
         allPostsButton = view.findViewById(R.id.allPostsButton);
         addLostOrFoundButton = view.findViewById(R.id.addLostOrFoundButton);
-        chatButton = view.findViewById(R.id.chatButton);
         mapButton = view.findViewById(R.id.mapButton);
         recyclerView = view.findViewById(R.id.recyclerView);
         getData();
@@ -113,17 +113,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: Implement chat page
-            }
-        });
-
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Implement Map page calling google maps API
+                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new MapsFragment()).commit();
             }
         });
 
