@@ -23,6 +23,7 @@ public class InDepthPostFragment extends Fragment {
     TextView postPetName;
     TextView postPetDetails;
     TextView textView30;
+    TextView textView39;
     // TODO: Rename and change types of parameters
     private PetPost mPost;
 
@@ -55,6 +56,8 @@ public class InDepthPostFragment extends Fragment {
         postPetName = view.findViewById(R.id.postPetName);
         postPetDetails = view.findViewById(R.id.postPetDetails);
         textView30 = view.findViewById(R.id.textView30);
+        textView39 = view.findViewById(R.id.textView39);
+        textView39.setText(mPost.user);
 
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);
