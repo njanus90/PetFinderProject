@@ -1,3 +1,2 @@
-include ':module'
 include ':app'
 rootProject.name = "PetFinderProject"
