@@ -5,16 +5,18 @@ import android.widget.ImageView;
 public class PetPost {
     //Lost or found ==  true or false
 
-    String name, details, user,status;
+    String name, details, user,status, lat, lng;
     //TODO: Some Map variable maybe?
     ImageView petPic;
 
-    public PetPost(String status, String name, String user, String details, ImageView petPic) {
+    public PetPost(String status, String name, String user, String details, ImageView petPic, String lat, String lng) {
         this.status = status;
         this.name = name;
         this.details = details;
         this.petPic = petPic;
         this.user = user;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getStatus() {

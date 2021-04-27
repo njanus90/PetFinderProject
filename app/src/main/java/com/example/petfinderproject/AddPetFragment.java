@@ -76,10 +76,13 @@ public class AddPetFragment extends Fragment {
         addSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //this puts the posts into firestore.
+                // the commented lines are things we need to finish here
                 HashMap<String, Object> fourm = new HashMap<>();
                 fourm.put("PetName", addPetName.getText().toString());
                 fourm.put("lost",lost.toString());
+                //fourm.put("lat",)
+                //fourm.put("lng",)
                 //fourm.put("location", )
                 //fourm.put("image",)
                 fourm.put("User", user);
