@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+
 import java.util.ArrayList;
 
 public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAdapterHome.UserViewholder> {
@@ -49,12 +51,24 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         TextView postPetDetails;
         TextView textView30;
         PetPost p;
+
+
         public UserViewholder(@NonNull View itemView) {
             super(itemView);
             postPetName = itemView.findViewById(R.id.postPetName);
             postPetDetails = itemView.findViewById(R.id.postPetDetails);
             textView30 = itemView.findViewById(R.id.textView30);
-        }
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   A.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentLayout, InDepthPostFragment.newInstance(p), "MyPosts")
+                            .addToBackStack(null)
+                            .commit();
+
+                }
+            });
+        }
     }
 }
