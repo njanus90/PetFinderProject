@@ -22,7 +22,7 @@ public class AddPetFragment extends Fragment {
     private static final String ARG_USER = "user";
 
     private String user;
-    private Boolean lost;
+    private String lost;
 
     Switch statusSwitch;
     Button browseButton, addMapButton, addSubmitButton;
@@ -46,7 +46,7 @@ public class AddPetFragment extends Fragment {
         if (getArguments() != null) {
             user = getArguments().getString(ARG_USER);
         }
-        lost = true;
+        lost = "Lost";
     }
 
     @Override
@@ -66,9 +66,9 @@ public class AddPetFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    lost = false;
+                    lost = "Found";
                 } else {
-                    lost = true;
+                    lost = "Lost";
                 }
             }
         });

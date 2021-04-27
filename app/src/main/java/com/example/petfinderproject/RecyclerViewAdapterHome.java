@@ -36,6 +36,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         holder.p = posts.get(position);
         holder.postPetName.setText(holder.p.name);
         holder.postPetDetails.setText(holder.p.details);
+        //redundant code once we change the information in the firestore
         if (holder.p.status.equals("true")) {
             holder.textView30.setText("LOST");
         } else{
