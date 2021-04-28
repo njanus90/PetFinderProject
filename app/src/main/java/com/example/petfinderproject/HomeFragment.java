@@ -99,24 +99,22 @@ public class HomeFragment extends Fragment {
 
 
 
-        allPostsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.fromHomeToAllPosts(user);
-            }
-        });
-
         addLostOrFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.fromHomeToAdd(user);
+                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, AddPetFragment.newInstance(user),"addPost")
+                        .addToBackStack(null)
+                        .commit();
+                //mListener.fromHomeToAdd(user);
             }
         });
 
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new MapsFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new MapsFragment(),"maps")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -175,6 +173,7 @@ public class HomeFragment extends Fragment {
                                         public void onClick(View v) {
                                             getFragmentManager().beginTransaction()
                                                     .replace(R.id.fragmentLayout, MyPostsFragment.newInstance(mAuth.getUid()), "MyPosts")
+                                                    .addToBackStack(null)
                                                     .commit();
                                         }
                                     });

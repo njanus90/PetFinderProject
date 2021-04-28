@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class AddPetFragment extends Fragment {
 
-    private static final String ARG_USER = "user";
+    private static final String ARG_USER = "addPost";
 
     private String user;
     private String lost;

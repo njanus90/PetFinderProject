@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link InDepthPostFragment#newInstance} factory method to
@@ -24,6 +26,7 @@ public class InDepthPostFragment extends Fragment {
     TextView postPetDetails;
     TextView textView30;
     TextView textView39;
+    FirebaseAuth auth;
     // TODO: Rename and change types of parameters
     private PetPost mPost;
 
@@ -57,7 +60,9 @@ public class InDepthPostFragment extends Fragment {
         postPetDetails = view.findViewById(R.id.postPetDetails);
         textView30 = view.findViewById(R.id.textView30);
         textView39 = view.findViewById(R.id.textView39);
-        textView39.setText(mPost.user);
+        auth = FirebaseAuth.getInstance();
+
+        //textView39.setText();
 
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);

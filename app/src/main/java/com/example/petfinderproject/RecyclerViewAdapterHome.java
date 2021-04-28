@@ -70,6 +70,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
 
                 }
             });
+
         }
     }
 }
