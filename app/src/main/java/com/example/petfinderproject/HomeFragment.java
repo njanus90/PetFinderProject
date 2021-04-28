@@ -162,11 +162,13 @@ public class HomeFragment extends Fragment {
                                         String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
                                         HashMap UserName = (HashMap)(task.getResult().getDocuments().get(i).get("user"));
                                         String details = task.getResult().getDocuments().get(i).get("details").toString();
+                                        String image = task.getResult().getDocuments().get(i).get("image").toString();
                                         //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
                                         //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
                                         //posts.add(new PetPost(lost, petName ,new User(UserName,UserId),details,null,null,null));
                                         User u = new User(UserName.get("name").toString(),UserName.get("id").toString());
-                                        posts.add(new PetPost(lost, petName ,u,details,null,null,null));
+                                        Log.d(TAG, image);
+                                        posts.add(new PetPost(lost, petName ,u,details,null,null,null,image));
                                     }
                                     adapter.notifyDataSetChanged();
                                 }

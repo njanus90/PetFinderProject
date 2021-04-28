@@ -6,12 +6,12 @@ import android.widget.ImageView;
 //this is the class that stores the posts of the pet lost or found
 public class PetPost implements Parcelable {
 
-    String name, details, status, lat, lng;
+    String name, details, status, lat, lng, image;
     User user;
     //TODO: Some Map variable maybe?
     ImageView petPic;
 
-    public PetPost(String status, String name, User user, String details, ImageView petPic, String lat, String lng) {
+    public PetPost(String status, String name, User user, String details, ImageView petPic, String lat, String lng,String image) {
         this.status = status;
         this.name = name;
         this.details = details;
@@ -19,6 +19,7 @@ public class PetPost implements Parcelable {
         this.user = user;
         this.lat = lat;
         this.lng = lng;
+        this.image = image;
     }
 
     protected PetPost(Parcel in) {

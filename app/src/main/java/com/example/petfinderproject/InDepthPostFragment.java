@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +41,7 @@ public class InDepthPostFragment extends Fragment {
     TextView postPetDetails;
     TextView textView30;
     TextView textView39;
-    String name;
+    ImageView imageView4;
 
     private PetPost mPost;
 
@@ -73,12 +75,14 @@ public class InDepthPostFragment extends Fragment {
         postPetDetails = view.findViewById(R.id.postPetDetails);
         textView30 = view.findViewById(R.id.textView30);
         textView39 = view.findViewById(R.id.textView39);
+        imageView4 = view.findViewById(R.id.imageView4);
 
         //sets all the text views
         textView39.setText(mPost.user.name);
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);
         textView30.setText(mPost.status);
+        Picasso.get().load(mPost.image).into(imageView4);
         return view;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.petfinderproject;
-
+//We don't actually use this right now.
+// We just don't associate particular users having perticular pets.
 public class Pet {
 
     String type, name, color, breed, age;

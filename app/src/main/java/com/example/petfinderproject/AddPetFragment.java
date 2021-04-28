@@ -100,7 +100,7 @@ public class AddPetFragment extends Fragment {
         browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showPictureDialog();
+                //this is to allow us to look at the files in our gallary
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -126,9 +126,12 @@ public class AddPetFragment extends Fragment {
         addSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //this puts the posts into firestore.
-                // the commented lines are things we need to finish here
-                Log.d("SWAG", selectedImage);
+                //checks if the user has an image selected
+                //if (imageView3.getDrawable() == null) {
+                    //Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_LONG).show();
+                //} else {
+                    //this puts the posts into firestore.
+                    // the commented lines are things we need to finish here
                 HashMap<String, Object> fourm = new HashMap<>();
                 fourm.put("PetName", addPetName.getText().toString());
                 fourm.put("lost", lost.toString());
@@ -136,7 +139,7 @@ public class AddPetFragment extends Fragment {
                 //fourm.put("lat",)
                 //fourm.put("lng",)
                 //fourm.put("location", )
-                //fourm.put("image",selectedImage);
+                fourm.put("image", selectedImage);
                 fourm.put("user", user);
                 fourm.put("details", addDetails.getText().toString());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -148,12 +151,14 @@ public class AddPetFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
             }
+            //}
         });
 
         return view;
 
     }
-
+    //this handles the image. it basically jsut gets the image uri from when we get back from
+    // looking at images to upload
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -164,135 +169,3 @@ public class AddPetFragment extends Fragment {
         }
     }
 }
-//    private void showPictureDialog(){
-//        Context context = getContext();
-//        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(context);
-//        pictureDialog.setTitle("Select Action");
-//        String[] pictureDialogItems = {
-//                "Select photo from gallery",
-//                "Capture photo from camera" };
-//        pictureDialog.setItems(pictureDialogItems,
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which) {
-//                            case 0:
-//                                //choosePhotoFromGallary();
-//                                break;
-//                            case 1:
-//                                takePhotoFromCamera();
-//                                break;
-//                        }
-//                    }
-//                });
-//        pictureDialog.show();
-//    }
-//    public void choosePhotoFromGallary() {
-//        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//
-//        startActivityForResult(galleryIntent, GALLERY);
-//    }
-//    private void takePhotoFromCamera() {
-//        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(intent, CAMERA);
-//    }
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        Context context = getContext();
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == getActivity().RESULT_CANCELED) {
-//            return;
-//        }
-//        //Here we can us picasso to just us the URI of the image but we can't actually access the gallary rn cause
-//        // this doesn't work and I don't know how to fix
-//        if (requestCode == GALLERY) {
-//            if (data != null) {
-//                Uri contentURI = data.getData();
-//                try {
-//                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), contentURI);
-//                    String path = saveImage(bitmap);
-//                    Toast.makeText(context, "Image Saved!", Toast.LENGTH_SHORT).show();
-//                    imageView3.setImageBitmap(bitmap);
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        //this is teh camera have to use more complicated bitmap methods to make this work
-//        } else if (requestCode == CAMERA) {
-//            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-//            imageView3.setImageBitmap(thumbnail);
-//            saveImage(thumbnail);
-//            Toast.makeText(context, "Image Saved!", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-    //saves the image tbh not really sure how all this bitmap stuff works cause I haven't looked into it
-//    public String saveImage(Bitmap myBitmap) {
-//        Context context = getContext();
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-//        File wallpaperDirectory = new File(
-//                Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
-//        // have the object build the directory structure, if needed.
-//        if (!wallpaperDirectory.exists()) {
-//            wallpaperDirectory.mkdirs();
-//        }
-//
-//        try {
-//            File f = new File(wallpaperDirectory, Calendar.getInstance()
-//                    .getTimeInMillis() + ".jpg");
-//            f.createNewFile();
-//            FileOutputStream fo = new FileOutputStream(f);
-//            fo.write(bytes.toByteArray());
-//            MediaScannerConnection.scanFile(context,
-//                    new String[]{f.getPath()},
-//                    new String[]{"image/jpeg"}, null);
-//            fo.close();
-//
-//            return f.getAbsolutePath();
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-//        return "";
-//    }
-//}
-
-
-/*
-	private static int RESULT_LOAD_IMAGE = 1;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
-        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent i = new Intent(
-						Intent.ACTION_PICK,
-						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(i, RESULT_LOAD_IMAGE);
-			}
-		});
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-			Uri selectedImage = data.getData();
-			String[] filePathColumn = { MediaStore.Images.Media.DATA };
-			Cursor cursor = getContentResolver().query(selectedImage,
-					filePathColumn, null, null, null);
-			cursor.moveToFirst();
-			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-			String picturePath = cursor.getString(columnIndex);
-			cursor.close();
-			ImageView imageView = (ImageView) findViewById(R.id.imgView);
-			imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-		}
-    }
-}
-
- */

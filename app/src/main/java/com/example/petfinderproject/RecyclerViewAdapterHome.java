@@ -1,5 +1,6 @@
 package com.example.petfinderproject;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCanceledListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -38,6 +40,8 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         holder.postPetName.setText(holder.p.name);
         holder.postPetDetails.setText(holder.p.details);
         holder.textView30.setText(holder.p.status);
+        //sets the image
+        Picasso.get().load(holder.p.image).into(holder.imageView2);
     }
 
     @Override
@@ -56,7 +60,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
             postPetName = itemView.findViewById(R.id.postPetName);
             postPetDetails = itemView.findViewById(R.id.postPetDetails);
             textView30 = itemView.findViewById(R.id.textView30);
-            //imageView2 = itemView.findViewById(R.id.imageView2);
+            imageView2 = itemView.findViewById(R.id.imageView2);
 
             // when a button in the home page scrollable list is clicked it goes to an indepth
             // view of the post
