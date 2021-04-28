@@ -3,6 +3,7 @@ package com.example.petfinderproject;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,10 +12,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
 public class ChangePasswordFragment extends Fragment {
 
     EditText confirmEmail, newChangePassword, confirmChangePassword;
     Button submitButtonChange;
+    private FirebaseAuth mAuth;
 
 
     public ChangePasswordFragment() {
@@ -43,11 +53,14 @@ public class ChangePasswordFragment extends Fragment {
         newChangePassword = view.findViewById(R.id.newChangePassword);
         confirmChangePassword = view.findViewById(R.id.confirmChangePassword);
         submitButtonChange = view.findViewById(R.id.submitButtonChange);
+        mAuth = FirebaseAuth.getInstance();
 
         submitButtonChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Implement a password change
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //sends an email to the user prompting them to change their password
+                FirebaseAuth.getInstance().sendPasswordResetEmail(confirmEmail.getText().toString());
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")
                         .addToBackStack(null)
