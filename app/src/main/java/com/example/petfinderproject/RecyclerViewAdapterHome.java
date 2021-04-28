@@ -66,9 +66,9 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
 
         storage = FirebaseStorage.getInstance();
         // Reference to an image file in Cloud Storage
-        //ref = storage.getReference(); holder.p.image
-        storageReference = ref.child("images/" + UUID.randomUUID().toString());
-        //ref = storageReference.child("images/" + UUID.randomUUID().toString());
+        ref = storage.getReference();
+        storageReference = ref.child(holder.p.image);
+
 
 
         ref.child(holder.p.image).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
