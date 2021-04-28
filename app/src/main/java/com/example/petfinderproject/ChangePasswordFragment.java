@@ -50,8 +50,6 @@ public class ChangePasswordFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_change_password, container, false);
 
         confirmEmail = view.findViewById(R.id.confirmEmail);
-        newChangePassword = view.findViewById(R.id.newChangePassword);
-        confirmChangePassword = view.findViewById(R.id.confirmChangePassword);
         submitButtonChange = view.findViewById(R.id.submitButtonChange);
         mAuth = FirebaseAuth.getInstance();
 
