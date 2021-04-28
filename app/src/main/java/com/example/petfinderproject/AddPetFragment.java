@@ -164,7 +164,7 @@ public class AddPetFragment extends Fragment {
             selectedImage = data.getData();
 
             //picturePath = getPath( getActivity( ).getApplicationContext( ), selectedImage );
-            Log.d("SWAG", "OnResult" + picturePath);
+            //Log.d("SWAG", "OnResult" + picturePath);
             Picasso.get().load(selectedImage).into(imageView3);
         }
     }
