@@ -54,7 +54,8 @@ public class AddPetFragment extends Fragment {
     Button browseButton, addMapButton, addSubmitButton;
     EditText addPetName, addDetails;
     ImageView imageView3;
-    Uri selectedImage;
+    //Uri selectedImage;
+    String selectedImage;
     String picturePath;
 
     public AddPetFragment() {
@@ -161,7 +162,8 @@ public class AddPetFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            selectedImage = data.getData();
+            //selectedImage = data.getData();
+            selectedImage = data.getData().toString();
 
             //picturePath = getPath( getActivity( ).getApplicationContext( ), selectedImage );
             //Log.d("SWAG", "OnResult" + picturePath);
