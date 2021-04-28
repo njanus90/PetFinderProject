@@ -54,17 +54,20 @@ public class LoginFragment extends Fragment {
         loginEmail = view.findViewById(R.id.loginEmail);
         loginPassword = view.findViewById(R.id.loginPassword);
 
+        //when the login button is clicked
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth = FirebaseAuth.getInstance();
 
+                //does error checking to see if all the fields are correct
                 if(loginEmail.getText().toString().isEmpty()){
                     Toast.makeText(getActivity(), "Enter Email", Toast.LENGTH_SHORT).show();
                 } else if(loginPassword.getText().toString().isEmpty()){
                     Toast.makeText(getActivity(), "Enter Password", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Made it", Toast.LENGTH_SHORT);
+                    //uses firebase authentication to log in
                     mAuth.signInWithEmailAndPassword(loginEmail.getText().toString(), loginPassword.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -73,12 +76,7 @@ public class LoginFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         //Logged in successfully
                                         Log.d("demo", "onComplete: Success");
-                                        Log.d("demo", mAuth.getCurrentUser().getUid());
-                                        Log.d("demo", mAuth.getCurrentUser().getDisplayName());
-                                        //FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                        //db.collection("users").document(mAuth.getCurrentUser().getDisplayName());
-                                        //Takes user to main fragment when successfully logged in
-                                        //mListener.fromLoginToHome(mAuth.getCurrentUser().getDisplayName());
+                                        //moves to the HomeFragment with the currently logged in user attached
                                         getFragmentManager().beginTransaction()
                                                 .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid())), "home-screen")
                                                 .commit();
@@ -93,16 +91,14 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        //if user clicks forgot password it moves to forgot password fragment
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Implement forgot password fragments
-
-                //mListener.fromLoginToChangePassword();
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, new ChangePasswordFragment())
+                        .addToBackStack(null)
                         .commit();
-
             }
         });
 

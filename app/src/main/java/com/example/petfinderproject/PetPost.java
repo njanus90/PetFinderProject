@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import android.widget.ImageView;
 //this is the class that stores the posts of the pet lost or found
 public class PetPost implements Parcelable {
-    //Lost or found ==  true or false
 
     String name, details, status, lat, lng;
     User user;

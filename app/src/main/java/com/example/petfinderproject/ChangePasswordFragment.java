@@ -48,25 +48,14 @@ public class ChangePasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: Implement a password change
-                mListener.fromChangeToLogin();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
 
        return view;
-    }
-
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof ChangePasswordFragment.changePassword) {
-            mListener = (ChangePasswordFragment.changePassword)context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement IListener");
-        }
-    }
-
-    ChangePasswordFragment.changePassword mListener;
-    public interface changePassword {
-        public void fromChangeToLogin();
     }
 }

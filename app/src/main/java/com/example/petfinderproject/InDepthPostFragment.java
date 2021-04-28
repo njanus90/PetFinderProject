@@ -30,7 +30,6 @@ import com.google.firebase.firestore.QuerySnapshot;
  */
 public class InDepthPostFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "post";
     private static final String TAG = "SWAG";
@@ -41,14 +40,12 @@ public class InDepthPostFragment extends Fragment {
     TextView textView30;
     TextView textView39;
     String name;
-    // TODO: Rename and change types of parameters
+
     private PetPost mPost;
 
-    public InDepthPostFragment() {
-        // Required empty public constructor
-    }
+    public InDepthPostFragment() { }
 
-    // TODO: Rename and change types and number of parameters
+    //the following two methods make it so the fragment can take in a post paramater
     public static InDepthPostFragment newInstance(PetPost post) {
         InDepthPostFragment fragment = new InDepthPostFragment();
         Bundle args = new Bundle();
@@ -77,26 +74,11 @@ public class InDepthPostFragment extends Fragment {
         textView30 = view.findViewById(R.id.textView30);
         textView39 = view.findViewById(R.id.textView39);
 
-//        //Log.d(TAG, mPost.user);
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("users").document(mPost.user.id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                name = task.getResult().get("name").toString();
-//                //Log.d(TAG, name);
-//            }
-//        });
-        Log.d(TAG, mPost.user.name);
         //sets all the text views
-        //textView39.setText(mPost.user);
+        textView39.setText(mPost.user.name);
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);
-        //redundant code once we change all the posts in firebase
-        if(mPost.status.equals("true")) {
-            textView30.setText("FOUND");
-        } else {
-            textView30.setText("LOST");
-        }
+        textView30.setText(mPost.status);
         return view;
     }
 }

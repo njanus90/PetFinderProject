@@ -51,34 +51,24 @@ public class WelcomeFragment extends Fragment {
         homeLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.fromWelcomeToLogin();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
         homeCreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.fromWelcomeToCreate();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, CreateAccountFragment.newInstance(), "create-screen")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
 
         return view;
-    }
-
-    //Handles transition between fragments in MainActivity
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof WelcomeFragment.accountButtons) {
-            mListener = (WelcomeFragment.accountButtons)context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement IListener");
-        }
-    }
-
-    WelcomeFragment.accountButtons mListener;
-    public interface accountButtons {
-        public void fromWelcomeToLogin();
-        public void fromWelcomeToCreate();
     }
 }

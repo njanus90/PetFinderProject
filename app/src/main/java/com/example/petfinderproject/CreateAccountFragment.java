@@ -68,6 +68,7 @@ public class CreateAccountFragment extends Fragment {
             public void onClick(View v) {
                 mAuth = FirebaseAuth.getInstance();
 
+                //some error checks
                 if(createEmail.getText().toString().isEmpty()){
                     builder.setMessage("Email missing") .setTitle("Error").create().show();
                 } else if(createPassword.getText().toString().isEmpty()){
@@ -75,12 +76,14 @@ public class CreateAccountFragment extends Fragment {
                 } else if(createName.getText().toString().isEmpty()){
                     builder.setMessage("Name missing") .setTitle("Error").create().show();
                 } else {
+                    //makes the user using firbase authentication
                     mAuth.createUserWithEmailAndPassword(createEmail.getText().toString(), createPassword.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
                                         createUser(createName.getText().toString(), mAuth.getUid());
+                                        //this sets the user's profile name to the one they typed in
                                         UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(createName.getText().toString())
                                                 .build();
@@ -96,7 +99,7 @@ public class CreateAccountFragment extends Fragment {
 
         return view;
     }
-
+    //this inputs the new user into firestore
     public void createUser(String name, String id){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -111,6 +114,7 @@ public class CreateAccountFragment extends Fragment {
                         Log.d("demo", "onComplete: Success");
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, new LoginFragment())
+                                .addToBackStack(null)
                                 .commit();
                     }
                 })
@@ -120,20 +124,5 @@ public class CreateAccountFragment extends Fragment {
                         //Fail
                     }
                 });
-    }
-
-    //TODO:Remove after above is updated
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof CreateAccountFragment.create) {
-            mListener = (CreateAccountFragment.create)context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement IListener");
-        }
-    }
-
-    CreateAccountFragment.create mListener;
-    public interface create {
-        public void fromCreateToLogin();
     }
 }

@@ -49,13 +49,11 @@ public class HomeFragment extends Fragment {
 
     ArrayList<User> users = new ArrayList<>();
     ArrayList<PetPost> posts = new ArrayList<>();
-    //ArrayAdapter<User> adapter;
-    User curUser;
 
     public HomeFragment() {
         // Required empty public constructor
     }
-
+    //the following two methods take in a user from another fragment
     public static HomeFragment newInstance(User user) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -99,7 +97,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-
+        //if the button to add a post is clicked it moves to that fragment
         addLostOrFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +109,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //if the map button is clicked it moves to the map fragment
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +120,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //if the user clicks on the my posts button it moves to that fragment
         allPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,12 +131,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        //TODO: Implement a ListView of scrollable and clickable posts near the user
-
         return view;
     }
 
+    //this method gets all the data needed in the homepage from the firestore database
     private void getData(){
         //Retrieves data from Database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -149,7 +147,7 @@ public class HomeFragment extends Fragment {
                         users.clear();
                         posts.clear();
                         for (QueryDocumentSnapshot document: value){
-
+                            //adds a user to an array that we are not using
                             users.add(new User(document.getData().get("name").toString(),document.getId()));
                             //this gets the data from the post collection in the firestore it loops through all the
                             // documents (users) and adds all their posts to an array that we pass into
@@ -162,8 +160,6 @@ public class HomeFragment extends Fragment {
 
                                         String lost = task.getResult().getDocuments().get(i).get("lost").toString();
                                         String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
-                                        //String UserId = task.getResult().getDocuments().get(i).get("UserId").toString();
-                                        //String UserName = task.getResult().getDocuments().get(i).get("UserName").toString();
                                         HashMap UserName = (HashMap)(task.getResult().getDocuments().get(i).get("user"));
                                         String details = task.getResult().getDocuments().get(i).get("details").toString();
                                         //String lat = task.getResult().getDocuments().get(i).get("lat").toString();

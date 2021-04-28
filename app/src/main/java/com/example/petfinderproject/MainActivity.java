@@ -23,8 +23,7 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
-public class MainActivity extends AppCompatActivity implements  WelcomeFragment.accountButtons,
-        CreateAccountFragment.create, ChangePasswordFragment.changePassword{
+public class MainActivity extends AppCompatActivity {
 
     RelativeLayout containerView;
     Toolbar myToolbar;
@@ -100,39 +99,5 @@ public class MainActivity extends AppCompatActivity implements  WelcomeFragment.
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-    @Override
-    public void fromWelcomeToLogin() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")
-                //.addToBackStack(null)
-                .commit();
-
-    }
-
-    @Override
-    public void fromWelcomeToCreate() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, CreateAccountFragment.newInstance(), "create-screen")
-                //.addToBackStack(null)
-                .commit();
-    }
-
-
-    @Override
-    public void fromCreateToLogin() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")
-                //.addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    public void fromChangeToLogin() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")
-                //.addToBackStack(null)
-                .commit();
     }
 }

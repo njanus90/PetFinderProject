@@ -55,6 +55,7 @@ public class AddPetFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_pet, container, false);
 
+        //finds the needed view items
         statusSwitch = view.findViewById(R.id.statusSwitch);
         browseButton = view.findViewById(R.id.browseButton);
         addMapButton = view.findViewById(R.id.addMapButton);
@@ -62,6 +63,10 @@ public class AddPetFragment extends Fragment {
         addPetName = view.findViewById(R.id.addPetName);
         addDetails = view.findViewById(R.id.addDetails);
 
+
+        //this determines the status of the switch
+        //if the switch is on the pet is Found
+        // if not the pet is lost
         statusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -81,26 +86,23 @@ public class AddPetFragment extends Fragment {
                 HashMap<String, Object> fourm = new HashMap<>();
                 fourm.put("PetName", addPetName.getText().toString());
                 fourm.put("lost",lost.toString());
+                //these are things we will need later
                 //fourm.put("lat",)
                 //fourm.put("lng",)
                 //fourm.put("location", )
                 //fourm.put("image",)
                 fourm.put("user",user);
-                //fourm.put("UserId", user.id);
-                //fourm.put("UserName",user.name);
                 fourm.put("details", addDetails.getText().toString());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("users").document(user.id).collection("posts").add(fourm);
 
-                //TODO: Make a PetPost object and add this info there then add it to the user's list of posts (arraylist of PetPost objects)
+                //moves to the home fragment
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "MyPosts")
                         .addToBackStack(null)
                         .commit();
-                // mListener.fromAddToHome(user);
             }
         });
-
 
         return view;
     }
