@@ -37,8 +37,8 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull UserViewholder holder, int position) {
         holder.p = posts.get(position);
-        holder.postPetName.setText(holder.p.name);
-        holder.postPetDetails.setText(holder.p.details);
+        //holder.postPetName.setText(holder.p.name);
+        //holder.postPetDetails.setText(holder.p.details);
         holder.textView30.setText(holder.p.status);
         //sets the image
         Picasso.get().load(holder.p.image).into(holder.imageView2);
