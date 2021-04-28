@@ -127,31 +127,31 @@ public class AddPetFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //checks if the user has an image selected
-                //if (imageView3.getDrawable() == null) {
-                    //Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_LONG).show();
-                //} else {
+                if (imageView3.getDrawable() == null) {
+                    Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_LONG).show();
+                } else {
                     //this puts the posts into firestore.
                     // the commented lines are things we need to finish here
-                HashMap<String, Object> fourm = new HashMap<>();
-                fourm.put("PetName", addPetName.getText().toString());
-                fourm.put("lost", lost.toString());
-                //these are things we will need later
-                //fourm.put("lat",)
-                //fourm.put("lng",)
-                //fourm.put("location", )
-                fourm.put("image", selectedImage);
-                fourm.put("user", user);
-                fourm.put("details", addDetails.getText().toString());
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(user.id).collection("posts").add(fourm);
+                    HashMap<String, Object> fourm = new HashMap<>();
+                    fourm.put("PetName", addPetName.getText().toString());
+                    fourm.put("lost", lost.toString());
+                    //these are things we will need later
+                    //fourm.put("lat",)
+                    //fourm.put("lng",)
+                    //fourm.put("location", )
+                    fourm.put("image", selectedImage);
+                    fourm.put("user", user);
+                    fourm.put("details", addDetails.getText().toString());
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("users").document(user.id).collection("posts").add(fourm);
 
-                //moves to the home fragment
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "MyPosts")
-                        .addToBackStack(null)
-                        .commit();
+                    //moves to the home fragment
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "MyPosts")
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
-            //}
         });
 
         return view;
