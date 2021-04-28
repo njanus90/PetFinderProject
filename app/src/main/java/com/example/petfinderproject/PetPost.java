@@ -7,11 +7,12 @@ import android.widget.ImageView;
 public class PetPost implements Parcelable {
     //Lost or found ==  true or false
 
-    String name, details, user,status, lat, lng;
+    String name, details, status, lat, lng;
+    User user;
     //TODO: Some Map variable maybe?
     ImageView petPic;
 
-    public PetPost(String status, String name, String user, String details, ImageView petPic, String lat, String lng) {
+    public PetPost(String status, String name, User user, String details, ImageView petPic, String lat, String lng) {
         this.status = status;
         this.name = name;
         this.details = details;
@@ -24,10 +25,10 @@ public class PetPost implements Parcelable {
     protected PetPost(Parcel in) {
         name = in.readString();
         details = in.readString();
-        user = in.readString();
         status = in.readString();
         lat = in.readString();
         lng = in.readString();
+        user = in.readParcelable(User.class.getClassLoader());
     }
 
     public static final Creator<PetPost> CREATOR = new Creator<PetPost>() {
@@ -83,7 +84,7 @@ public class PetPost implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(details);
-        dest.writeString(user);
+        dest.writeParcelable(user,1);
         dest.writeString(status);
         dest.writeString(lat);
         dest.writeString(lng);

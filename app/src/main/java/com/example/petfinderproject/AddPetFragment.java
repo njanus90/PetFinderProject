@@ -21,7 +21,7 @@ public class AddPetFragment extends Fragment {
 
     private static final String ARG_USER = "addPost";
 
-    private String user;
+    private User user;
     private String lost;
 
     Switch statusSwitch;
@@ -32,10 +32,10 @@ public class AddPetFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static AddPetFragment newInstance(String user) {
+    public static AddPetFragment newInstance(User user) {
         AddPetFragment fragment = new AddPetFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_USER, user);
+        args.putParcelable(ARG_USER, user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,7 +44,7 @@ public class AddPetFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user = getArguments().getString(ARG_USER);
+            user = getArguments().getParcelable(ARG_USER);
         }
         lost = "Lost";
     }
@@ -85,31 +85,23 @@ public class AddPetFragment extends Fragment {
                 //fourm.put("lng",)
                 //fourm.put("location", )
                 //fourm.put("image",)
-                fourm.put("User", user);
+                fourm.put("user",user);
+                //fourm.put("UserId", user.id);
+                //fourm.put("UserName",user.name);
                 fourm.put("details", addDetails.getText().toString());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(user).collection("posts").add(fourm);
+                db.collection("users").document(user.id).collection("posts").add(fourm);
 
                 //TODO: Make a PetPost object and add this info there then add it to the user's list of posts (arraylist of PetPost objects)
-                mListener.fromAddToHome(user);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "MyPosts")
+                        .addToBackStack(null)
+                        .commit();
+                // mListener.fromAddToHome(user);
             }
         });
 
 
         return view;
-    }
-
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof AddPetFragment.addInterface) {
-            mListener = (AddPetFragment.addInterface)context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement IListener");
-        }
-    }
-
-    AddPetFragment.addInterface mListener;
-    public interface addInterface {
-        public void fromAddToHome(String user);
     }
 }

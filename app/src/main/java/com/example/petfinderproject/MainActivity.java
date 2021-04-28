@@ -23,9 +23,8 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
-
-public class MainActivity extends AppCompatActivity implements  WelcomeFragment.accountButtons, LoginFragment.login, HomeFragment.homeInterface,
-        AddPetFragment.addInterface, CreateAccountFragment.create, ChangePasswordFragment.changePassword{
+public class MainActivity extends AppCompatActivity implements  WelcomeFragment.accountButtons,
+        CreateAccountFragment.create, ChangePasswordFragment.changePassword{
 
     RelativeLayout containerView;
     Toolbar myToolbar;
@@ -120,61 +119,6 @@ public class MainActivity extends AppCompatActivity implements  WelcomeFragment.
                 .commit();
     }
 
-    @Override
-    public void fromLoginToHome(String user) {
-        //Keeps the user known in the main activity for logout
-        this.user = user;
-        //Sets the toolbar after logging in
-        setSupportActionBar(myToolbar);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "home-screen")
-                //TODO: Make it to where hitting back on this screen closes the app or logs out, for now back stack is needed
-                .addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    public void fromLoginToChangePassword() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, ChangePasswordFragment.newInstance(), "add-screen")
-                //.addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    public void fromHomeToAllPosts(String user) {
-        this.user = user;
-    }
-
-    @Override
-    public void fromHomeToAdd(String user) {
-        this.user = user;
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, AddPetFragment.newInstance(user), "add-screen")
-                //.addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    public void fromHomeToMap(String user) {
-        //TODO: Implement map screen
-    }
-
-    @Override
-    public void fromHomeToChat(String user) {
-        //TODO: Implement chat screen
-    }
-
-    @Override
-    public void fromAddToHome(String user) {
-        //Keeps the user known in the main activity for logout
-        this.user = user;
-        //Sets the toolbar after logging in
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "home-screen")
-                //.addToBackStack(null)
-                .commit();
-    }
 
     @Override
     public void fromCreateToLogin() {

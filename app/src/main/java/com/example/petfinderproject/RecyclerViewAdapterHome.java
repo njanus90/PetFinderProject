@@ -60,6 +60,8 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
             postPetDetails = itemView.findViewById(R.id.postPetDetails);
             textView30 = itemView.findViewById(R.id.textView30);
 
+            // when a button in the home page scrollable list is clicked it goes to an indepth
+            // view of the post
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,7 +69,6 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
                             .replace(R.id.fragmentLayout, InDepthPostFragment.newInstance(p), "MyPosts")
                             .addToBackStack(null)
                             .commit();
-
                 }
             });
 

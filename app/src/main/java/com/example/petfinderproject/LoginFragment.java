@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginFragment extends Fragment {
     private FirebaseAuth mAuth;
@@ -72,10 +73,14 @@ public class LoginFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         //Logged in successfully
                                         Log.d("demo", "onComplete: Success");
+                                        Log.d("demo", mAuth.getCurrentUser().getUid());
+                                        Log.d("demo", mAuth.getCurrentUser().getDisplayName());
+                                        //FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        //db.collection("users").document(mAuth.getCurrentUser().getDisplayName());
                                         //Takes user to main fragment when successfully logged in
                                         //mListener.fromLoginToHome(mAuth.getCurrentUser().getDisplayName());
                                         getFragmentManager().beginTransaction()
-                                                .replace(R.id.fragmentLayout, HomeFragment.newInstance(mAuth.getUid()), "home-screen")
+                                                .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid())), "home-screen")
                                                 .commit();
                                     } else {
                                         //Log in fail
@@ -102,21 +107,5 @@ public class LoginFragment extends Fragment {
         });
 
         return view;
-    }
-
-    //TODO: Make sure all of these are changed above and then remove the excess code from MainActivity
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof LoginFragment.login) {
-            mListener = (LoginFragment.login)context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement IListener");
-        }
-    }
-
-    LoginFragment.login mListener;
-    public interface login {
-        public void fromLoginToHome(String user);
-        public void fromLoginToChangePassword();
     }
 }

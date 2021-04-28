@@ -21,6 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,16 +68,17 @@ public class MyPostsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.d("TAG", auth.getCurrentUser().getUid());
         CollectionReference postOrder = db.collection("users").document(auth.getCurrentUser().getUid()).collection("posts");
         postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 posts.clear();
-                //Log.d(TAG, value.getDocuments().get(0).get("PetName").toString());
                 for(QueryDocumentSnapshot doc: value) {
-
-                    posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),doc.get("User").toString(),doc.get("details").toString(),null,null,null));
+                    //since we can't just get the object we from firestore we get it as a hashmap and convert that into a user object
+                    HashMap u = (HashMap) (doc.get("user"));
+                    User use = new User(u.get("name").toString(),u.get("id").toString());
+                    //adds a new petPost to the posts array
+                    posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),use,doc.get("details").toString(),null,null,null));
                 }
                 adapter.notifyDataSetChanged();
             }

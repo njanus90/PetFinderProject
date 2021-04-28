@@ -33,13 +33,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     private static final String ARG_USER = "user";
     private static final String TAG = "SWAG";
-    private String user;
+    private User user;
 
     Button allPostsButton, addLostOrFoundButton, chatButton, mapButton;
     RecyclerView recyclerView;
@@ -55,10 +56,10 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String user) {
+    public static HomeFragment newInstance(User user) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_USER, user);
+        args.putParcelable(ARG_USER, user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +68,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user = getArguments().getString(ARG_USER);
+            user = getArguments().getParcelable(ARG_USER);
         }
     }
 
@@ -102,7 +103,8 @@ public class HomeFragment extends Fragment {
         addLostOrFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, AddPetFragment.newInstance(user),"addPost")
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, AddPetFragment.newInstance(user),"addPost")
                         .addToBackStack(null)
                         .commit();
                 //mListener.fromHomeToAdd(user);
@@ -112,7 +114,18 @@ public class HomeFragment extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new MapsFragment(),"maps")
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, new MapsFragment(),"maps")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        allPostsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, MyPostsFragment.newInstance(mAuth.getCurrentUser().getUid()), "MyPosts")
                         .addToBackStack(null)
                         .commit();
             }
@@ -137,10 +150,7 @@ public class HomeFragment extends Fragment {
                         posts.clear();
                         for (QueryDocumentSnapshot document: value){
 
-                            Log.d("SWAG", document.getData().get("name").toString());
-                            //ArrayList<String> likedBy = (ArrayList<String>)document.get("likedBy");
-                            users.add(new User(document.getData().get("name").toString()));
-                            Log.d(TAG, document.getId());
+                            users.add(new User(document.getData().get("name").toString(),document.getId()));
                             //this gets the data from the post collection in the firestore it loops through all the
                             // documents (users) and adds all their posts to an array that we pass into
                             // the recyclerview to list them on the main page.
@@ -149,15 +159,18 @@ public class HomeFragment extends Fragment {
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                                     for(int i =0; i < task.getResult().getDocuments().size(); i++) {
-                                        //Log.d(TAG, task.getResult().getDocuments().get(i).get("lost/found").toString());
+
                                         String lost = task.getResult().getDocuments().get(i).get("lost").toString();
                                         String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
-                                        String UserId = task.getResult().getDocuments().get(i).get("User").toString();
+                                        //String UserId = task.getResult().getDocuments().get(i).get("UserId").toString();
+                                        //String UserName = task.getResult().getDocuments().get(i).get("UserName").toString();
+                                        HashMap UserName = (HashMap)(task.getResult().getDocuments().get(i).get("user"));
                                         String details = task.getResult().getDocuments().get(i).get("details").toString();
                                         //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
                                         //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
-
-                                        posts.add(new PetPost(lost, petName ,UserId,details,null,null,null));
+                                        //posts.add(new PetPost(lost, petName ,new User(UserName,UserId),details,null,null,null));
+                                        User u = new User(UserName.get("name").toString(),UserName.get("id").toString());
+                                        posts.add(new PetPost(lost, petName ,u,details,null,null,null));
                                     }
                                     adapter.notifyDataSetChanged();
                                 }
@@ -168,36 +181,11 @@ public class HomeFragment extends Fragment {
                                 public void run() {
                                     //TODO: Get the name in the title working
                                     getActivity().setTitle(document.getString("name"));
-                                    allPostsButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            getFragmentManager().beginTransaction()
-                                                    .replace(R.id.fragmentLayout, MyPostsFragment.newInstance(mAuth.getUid()), "MyPosts")
-                                                    .addToBackStack(null)
-                                                    .commit();
-                                        }
-                                    });
                                 }
                             });
                         }
                         adapter.notifyDataSetChanged();
                     }
                 });
-    }
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof HomeFragment.homeInterface) {
-            mListener = (HomeFragment.homeInterface)context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement IListener");
-        }
-    }
-
-    HomeFragment.homeInterface mListener;
-    public interface homeInterface {
-        public void fromHomeToAllPosts(String user);
-        public void fromHomeToAdd(String user);
-        public void fromHomeToMap(String user);
-        public void fromHomeToChat(String user);
     }
 }
