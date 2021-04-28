@@ -45,9 +45,6 @@ public class AddPetFragment extends Fragment {
 
     private static final String ARG_USER = "addPost";
     private static int RESULT_LOAD_IMAGE = 1;
-    private static final String IMAGE_DIRECTORY = "/encoded_image";
-    private static final int GALLERY = 1, CAMERA = 2;
-    Uri myPicture = null;
 
     private User user;
     private String lost;
@@ -57,7 +54,8 @@ public class AddPetFragment extends Fragment {
     Button browseButton, addMapButton, addSubmitButton;
     EditText addPetName, addDetails;
     ImageView imageView3;
-    String selectedImage;
+    Uri selectedImage;
+    String picturePath;
 
     public AddPetFragment() {
         // Required empty public constructor
@@ -163,9 +161,27 @@ public class AddPetFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            selectedImage = data.getData().toString();
-            Log.d("SWAG", "OnResult" + selectedImage);
+            selectedImage = data.getData();
+
+            //picturePath = getPath( getActivity( ).getApplicationContext( ), selectedImage );
+            Log.d("SWAG", "OnResult" + picturePath);
             Picasso.get().load(selectedImage).into(imageView3);
         }
     }
+//    public static String getPath( Context context, Uri uri ) {
+//        String result = null;
+//        String[] proj = {MediaStore.Images.Media.DATA};
+//        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+//        if (cursor != null) {
+//            if (cursor.moveToFirst()) {
+//                int column_index = cursor.getColumnIndexOrThrow(proj[0]);
+//                result = cursor.getString(column_index);
+//            }
+//            cursor.close();
+//        }
+//        if (result == null) {
+//            result = "Not found";
+//        }
+//        return result;
+//    }
 }
