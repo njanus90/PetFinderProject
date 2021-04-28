@@ -89,7 +89,6 @@ public class AddPetFragment extends Fragment {
         //finds the needed view items
         statusSwitch = view.findViewById(R.id.statusSwitch);
         browseButton = view.findViewById(R.id.browseButton);
-        addMapButton = view.findViewById(R.id.addMapButton);
         addSubmitButton = view.findViewById(R.id.submitButtonPet);
         addPetName = view.findViewById(R.id.addPetName);
         addDetails = view.findViewById(R.id.addDetails);
