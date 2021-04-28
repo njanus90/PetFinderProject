@@ -51,12 +51,16 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
+
+    //firestore stuff
     implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.firebaseui:firebase-ui-storage:6.4.0'
 
     //for picasso
 
     implementation "com.squareup.okhttp3:mockwebserver:4.9.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.firebase:firebase-storage:19.2.2'
 
 
     testImplementation 'junit:junit:4.+'

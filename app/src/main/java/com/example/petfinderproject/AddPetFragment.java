@@ -1,6 +1,7 @@
 package com.example.petfinderproject;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -28,7 +30,13 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -37,6 +45,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 import static android.media.MediaRecorder.VideoSource.CAMERA;
@@ -54,8 +63,12 @@ public class AddPetFragment extends Fragment {
     Button browseButton, addMapButton, addSubmitButton;
     EditText addPetName, addDetails;
     ImageView imageView3;
-    //Uri selectedImage;
-    String selectedImage;
+
+    StorageReference ref;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    Uri filePath;
+    //String selectedImage;
     String picturePath;
 
     public AddPetFragment() {
@@ -99,6 +112,8 @@ public class AddPetFragment extends Fragment {
         browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                storage = FirebaseStorage.getInstance();
+                storageReference = storage.getReference();
                 //this is to allow us to look at the files in our gallary
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
@@ -138,7 +153,7 @@ public class AddPetFragment extends Fragment {
                     //fourm.put("lat",)
                     //fourm.put("lng",)
                     //fourm.put("location", )
-                    fourm.put("image", selectedImage);
+                    fourm.put("image", ref.toString());
                     fourm.put("user", user);
                     fourm.put("details", addDetails.getText().toString());
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -156,20 +171,107 @@ public class AddPetFragment extends Fragment {
         return view;
 
     }
+
     //this handles the image. it basically jsut gets the image uri from when we get back from
     // looking at images to upload
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Context context = getContext();
             //selectedImage = data.getData();
-            selectedImage = data.getData().toString();
+            filePath = data.getData();
 
-            //picturePath = getPath( getActivity( ).getApplicationContext( ), selectedImage );
+            try {
+
+                // Setting image on image view using Bitmap
+                Bitmap bitmap = MediaStore
+                        .Images
+                        .Media
+                        .getBitmap(
+                                context.getContentResolver(),
+                                filePath);
+                imageView3.setImageBitmap(bitmap);
+                uploadImage();
+            } catch (IOException e) {
+                // Log the exception
+                e.printStackTrace();
+            }
+
             //Log.d("SWAG", "OnResult" + picturePath);
-            Picasso.get().load(selectedImage).into(imageView3);
+            //Picasso.get().load(selectedImage).into(imageView3);
         }
     }
+
+    // UploadImage method
+    private void uploadImage() {
+        if (filePath != null) {
+
+            // Code for showing progressDialog while uploading
+            ProgressDialog progressDialog
+                    = new ProgressDialog(getContext());
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            // Defining the child of storageReference
+            ref = storageReference;//.child("images/" + UUID.randomUUID().toString());
+
+            Log.d("SWAG", ref.toString());
+
+            // adding listeners on upload
+            // or failure of image
+            ref.putFile(filePath)
+                    .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                                @Override
+                                public void onSuccess(
+                                        UploadTask.TaskSnapshot taskSnapshot) {
+
+                                    // Image uploaded successfully
+                                    // Dismiss dialog
+                                    progressDialog.dismiss();
+                                    Toast
+                                            .makeText(getContext(),
+                                                    "Image Uploaded!!",
+                                                    Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            // Error, Image not uploaded
+                            progressDialog.dismiss();
+                            Toast
+                                    .makeText(getContext(),
+                                            "Failed " + e.getMessage(),
+                                            Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    })
+                    .addOnProgressListener(
+                            new OnProgressListener<UploadTask.TaskSnapshot>() {
+
+                                // Progress Listener for loading
+                                // percentage on the dialog box
+                                @Override
+                                public void onProgress(
+                                        UploadTask.TaskSnapshot taskSnapshot) {
+                                    double progress
+                                            = (100.0
+                                            * taskSnapshot.getBytesTransferred()
+                                            / taskSnapshot.getTotalByteCount());
+                                    progressDialog.setMessage(
+                                            "Uploaded "
+                                                    + (int) progress + "%");
+                                }
+                            });
+        }
+    }
+}
 //    public static String getPath( Context context, Uri uri ) {
 //        String result = null;
 //        String[] proj = {MediaStore.Images.Media.DATA};
@@ -186,4 +288,3 @@ public class AddPetFragment extends Fragment {
 //        }
 //        return result;
 //    }
-}

@@ -79,6 +79,7 @@ public class LoginFragment extends Fragment {
                                         //moves to the HomeFragment with the currently logged in user attached
                                         getFragmentManager().beginTransaction()
                                                 .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid())), "home-screen")
+                                                .addToBackStack(null)
                                                 .commit();
                                     } else {
                                         //Log in fail

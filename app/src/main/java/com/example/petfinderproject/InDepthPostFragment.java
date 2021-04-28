@@ -1,5 +1,6 @@
 package com.example.petfinderproject;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -42,6 +46,10 @@ public class InDepthPostFragment extends Fragment {
     TextView textView30;
     TextView textView39;
     ImageView imageView4;
+    // instance for firebase storage and StorageReference
+    StorageReference ref;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     private PetPost mPost;
 
@@ -82,7 +90,26 @@ public class InDepthPostFragment extends Fragment {
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);
         textView30.setText(mPost.status);
-        Picasso.get().load(mPost.image).into(imageView4);
+
+
+        storage = FirebaseStorage.getInstance();
+        // Reference to an image file in Cloud Storage
+        ref = storage.getReference();
+
+        ref.child(mPost.image).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful()){
+                    Uri uri = task.getResult();
+                    Picasso.get().load(uri).into(imageView4);
+                }
+            }
+        });
+
+//        // Download directly from StorageReference using Glide
+//        Glide.with(getContext())
+//                .load(storageReference)
+//                .into(imageView4);
         return view;
     }
 }
