@@ -61,8 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Browse"
-        app:layout_constraintEnd_toStartOf="@+id/statusSwitch"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="@+id/statusSwitch"
+        app:layout_constraintStart_toStartOf="@+id/statusSwitch"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <Button
@@ -79,34 +79,24 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="Picture of Pet"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/browseButton"
         app:layout_constraintStart_toStartOf="@+id/browseButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:text="Image of pet"
-        app:layout_constraintBottom_toBottomOf="@+id/browseButton"
-        app:layout_constraintEnd_toEndOf="@+id/textView8"
-        app:layout_constraintStart_toEndOf="@+id/browseButton"
-        app:layout_constraintTop_toTopOf="@+id/browseButton" />
+        app:layout_constraintTop_toBottomOf="@+id/statusSwitch" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
         android:text="Name of Pet:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/browseButton" />
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <EditText
         android:id="@+id/addPetName"
@@ -118,29 +108,9 @@
         android:hint="Fido"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
         app:layout_constraintStart_toEndOf="@+id/textView13"
         app:layout_constraintTop_toTopOf="@+id/textView13" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Last Known Location:"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <Button
-        android:id="@+id/addMapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Map"
-        app:icon="@android:drawable/ic_dialog_map"
-        app:layout_constraintEnd_toEndOf="@+id/textView8"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
         android:id="@+id/textView15"
@@ -149,21 +119,21 @@
         android:layout_marginTop="32dp"
         android:text="Additional Details:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/addMapButton" />
+        app:layout_constraintStart_toStartOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <EditText
         android:id="@+id/addDetails"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/oval"
         android:ems="10"
-        android:hint="Details..."
         android:inputType="textPersonName"
         android:padding="5dip"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
@@ -175,11 +145,10 @@
         android:id="@+id/imageView3"
         android:layout_width="102dp"
         android:layout_height="96dp"
-        app:layout_constraintBottom_toTopOf="@+id/addPetName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.601"
-        app:layout_constraintStart_toEndOf="@+id/browseButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.508"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/browseButton"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="@+id/browseButton"
+        app:layout_constraintTop_toBottomOf="@+id/browseButton"
         tools:src="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
