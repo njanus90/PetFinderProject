@@ -3,6 +3,7 @@ package com.example.petfinderproject;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         TextView postPetDetails;
         TextView textView30;
         PetPost p;
+        ImageView imageView2;
 
 
         public UserViewholder(@NonNull View itemView) {
@@ -54,6 +56,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
             postPetName = itemView.findViewById(R.id.postPetName);
             postPetDetails = itemView.findViewById(R.id.postPetDetails);
             textView30 = itemView.findViewById(R.id.textView30);
+            //imageView2 = itemView.findViewById(R.id.imageView2);
 
             // when a button in the home page scrollable list is clicked it goes to an indepth
             // view of the post
