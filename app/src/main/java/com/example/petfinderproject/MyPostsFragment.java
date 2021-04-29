@@ -85,7 +85,6 @@ public class MyPostsFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 posts.clear();
                 for(QueryDocumentSnapshot doc: value) {
-                    Log.d(TAG, doc.get("user").toString());
                     //since we can't just get the object we from firestore we get it as a hashmap and convert that into a user object
                     HashMap u = (HashMap) (doc.get("user"));
                     User use = new User(u.get("name").toString(),u.get("id").toString());
@@ -95,7 +94,6 @@ public class MyPostsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-        Log.d(TAG, posts.toString());
 
 
         return view;

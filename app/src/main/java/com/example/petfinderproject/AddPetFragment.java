@@ -54,6 +54,7 @@ public class AddPetFragment extends Fragment {
 
     private static final String ARG_USER = "addPost";
     private static int RESULT_LOAD_IMAGE = 1;
+    private static String TAG = "SWAG";
 
     private User user;
     private String lost;
@@ -205,7 +206,7 @@ public class AddPetFragment extends Fragment {
     // UploadImage method
     private void uploadImage() {
         if (filePath != null) {
-
+            Log.d(TAG, filePath.toString());
             // Code for showing progressDialog while uploading
             ProgressDialog progressDialog
                     = new ProgressDialog(getContext());
