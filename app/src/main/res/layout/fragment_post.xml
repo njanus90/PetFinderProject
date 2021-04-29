@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView30"
+                android:id="@+id/textViewLostFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -31,13 +31,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView39"
+                android:id="@+id/textViewUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/textView30"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewLostFound"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView30" />
 

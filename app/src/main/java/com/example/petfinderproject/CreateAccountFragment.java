@@ -84,7 +84,7 @@ public class CreateAccountFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        createUser(createName.getText().toString(), mAuth.getUid());
+                                        createUser(createName.getText().toString(), mAuth.getUid(),createEmail.getText().toString());
                                         //this sets the user's profile name to the one they typed in
                                         UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(createName.getText().toString())
@@ -102,11 +102,12 @@ public class CreateAccountFragment extends Fragment {
         return view;
     }
     //this inputs the new user into firestore
-    public void createUser(String name, String id){
+    public void createUser(String name, String id,String email){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         HashMap<String, String> user = new HashMap<>();
         user.put("name", name);
+        user.put("email", email);
 
         db.collection("users").document(id)
                 .set(user)

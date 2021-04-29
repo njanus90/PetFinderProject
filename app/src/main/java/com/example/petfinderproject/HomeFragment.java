@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
     LinearLayoutManager layoutManager;
     RecyclerViewAdapterHome adapter;
     //not sure we need this list of users but its nice to have
-    ArrayList<User> users = new ArrayList<>();
+    //ArrayList<User> users = new ArrayList<>();
     ArrayList<PetPost> posts = new ArrayList<>();
 
     public HomeFragment() {
@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentLayout, MyPostsFragment.newInstance(mAuth.getCurrentUser().getUid()), "MyPosts")
+                        .replace(R.id.fragmentLayout, MyPostsFragment.newInstance(user.id), "MyPosts")
                         .addToBackStack(null)
                         .commit();
             }
@@ -143,12 +143,13 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         //clears the posts array and users array so we don't see things more than once
-                        users.clear();
+                        //users.clear();
                         posts.clear();
                         //loops through the users collection in firestore
                         for (QueryDocumentSnapshot document: value){
+                            //Log.d(TAG, document.getData().get("email").toString());
                             //adds a user to an array that we are not using
-                            users.add(new User(document.getData().get("name").toString(),document.getId()));
+                            //users.add(new User(document.getData().get("name").toString(),document.getId(),document.getData().get("email").toString()));
                             //this gets the data from the post collection in the firestore it loops through all the
                             // post collection each user has and adds all their posts to an array that we pass into
                             // the recyclerview to list them on the main page.
@@ -166,8 +167,7 @@ public class HomeFragment extends Fragment {
                                         //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
                                         //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
                                         //posts.add(new PetPost(lost, petName ,new User(UserName,UserId),details,null,null,null));
-                                        User u = new User(UserName.get("name").toString(),UserName.get("id").toString());
-                                        Log.d(TAG, image + " This Is the Ref From AddPetFrag");
+                                        User u = new User(UserName.get("name").toString(),UserName.get("id").toString(),UserName.get("email").toString());
                                         posts.add(new PetPost(lost, petName ,u,details,image,null,null));
                                     }
                                     adapter.notifyDataSetChanged();

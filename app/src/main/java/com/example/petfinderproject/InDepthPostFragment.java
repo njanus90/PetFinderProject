@@ -3,29 +3,15 @@ package com.example.petfinderproject;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -44,8 +30,8 @@ public class InDepthPostFragment extends Fragment {
     //all variables
     TextView postPetName;
     TextView postPetDetails;
-    TextView textView30;
-    TextView textView39;
+    TextView textViewLostFound;
+    TextView textViewUserName;
     ImageView imageView4;
     StorageReference ref;
     FirebaseStorage storage;
@@ -80,15 +66,15 @@ public class InDepthPostFragment extends Fragment {
         //finds all the required components
         postPetName = view.findViewById(R.id.postPetName);
         postPetDetails = view.findViewById(R.id.postPetDetails);
-        textView30 = view.findViewById(R.id.textView30);
-        textView39 = view.findViewById(R.id.textView39);
+        textViewLostFound = view.findViewById(R.id.textViewLostFound);
+        textViewUserName = view.findViewById(R.id.textViewUserName);
         imageView4 = view.findViewById(R.id.imageView4);
 
         //sets all the text views
-        textView39.setText(mPost.user.name);
+        textViewUserName.setText(mPost.user.name);
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);
-        textView30.setText(mPost.status);
+        textViewLostFound.setText(mPost.status);
 
         //gets the storage instance
         storage = FirebaseStorage.getInstance();
@@ -100,6 +86,17 @@ public class InDepthPostFragment extends Fragment {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(imageView4);
+            }
+        });
+
+        textViewUserName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(mPost.user), "Profile")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         return view;

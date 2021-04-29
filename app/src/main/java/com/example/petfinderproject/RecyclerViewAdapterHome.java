@@ -1,10 +1,6 @@
 package com.example.petfinderproject;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,27 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.petfinderproject.PetPost;
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAdapterHome.UserViewholder> {
     //variables we need
@@ -96,8 +80,8 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
             //fill the variables
             postPetName = itemView.findViewById(R.id.postPetName);
             postPetDetails = itemView.findViewById(R.id.postPetDetails);
-            textView30 = itemView.findViewById(R.id.textView30);
-            textView39 = itemView.findViewById(R.id.textView39);
+            textView30 = itemView.findViewById(R.id.textViewLostFound);
+            textView39 = itemView.findViewById(R.id.textViewUserName);
             imageView2 = itemView.findViewById(R.id.imageView2);
 
             // when a button in the home page scrollable list is clicked it goes to an indepth

@@ -152,7 +152,7 @@ public class AddPetFragment extends Fragment {
                     //this puts the posts into firestore.
                     HashMap<String, Object> fourm = new HashMap<>();
                     fourm.put("PetName", addPetName.getText().toString());
-                    fourm.put("lost", lost.toString());
+                    fourm.put("lost", lost);
                     //these are things we will need later
                     //fourm.put("lat",)
                     //fourm.put("lng",)
@@ -206,7 +206,6 @@ public class AddPetFragment extends Fragment {
     // UploadImage method
     private void uploadImage() {
         if (filePath != null) {
-            Log.d(TAG, filePath.toString() + "FILEPATH");
 
             // Code for showing progressDialog while uploading
             // not really nessesary but it looks nice

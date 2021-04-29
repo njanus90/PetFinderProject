@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,6 +33,7 @@ public class MyPostsFragment extends Fragment {
     RecyclerView recyclerViewMYPosts;
     LinearLayoutManager layoutManager;
     RecyclerViewAdapterHome adapter;
+    TextView textViewAnyPosts;
     FirebaseAuth auth;
 
     private static final String ARG_USER = "MyPosts";
@@ -67,6 +69,13 @@ public class MyPostsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_posts, container, false);
         auth = FirebaseAuth.getInstance();
 
+        textViewAnyPosts = view.findViewById(R.id.textViewAnyPosts);
+
+        if(posts.isEmpty())
+        {
+            textViewAnyPosts.setVisibility(view.VISIBLE);
+        }
+
         recyclerViewMYPosts = view.findViewById(R.id.recyclerViewMYPosts);
 
         recyclerViewMYPosts.setHasFixedSize(true);
@@ -79,7 +88,7 @@ public class MyPostsFragment extends Fragment {
         recyclerViewMYPosts.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference postOrder = db.collection("users").document(auth.getCurrentUser().getUid()).collection("posts");
+        CollectionReference postOrder = db.collection("users").document(user).collection("posts");
         postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -87,7 +96,7 @@ public class MyPostsFragment extends Fragment {
                 for(QueryDocumentSnapshot doc: value) {
                     //since we can't just get the object we from firestore we get it as a hashmap and convert that into a user object
                     HashMap u = (HashMap) (doc.get("user"));
-                    User use = new User(u.get("name").toString(),u.get("id").toString());
+                    User use = new User(u.get("name").toString(),u.get("id").toString(),u.get("email").toString());
                     //adds a new petPost to the posts array
                     posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),use,doc.get("details").toString(),doc.get("image").toString(),null,null));
                 }
