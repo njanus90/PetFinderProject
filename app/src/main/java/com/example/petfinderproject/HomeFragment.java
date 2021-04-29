@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment {
         addLostOrFoundButton = view.findViewById(R.id.addLostOrFoundButton);
         mapButton = view.findViewById(R.id.mapButton);
         recyclerView = view.findViewById(R.id.recyclerView);
+
         getData();
 
 
@@ -177,8 +178,8 @@ public class HomeFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //TODO: Get the name in the title working
-                                    getActivity().setTitle(document.getString("name"));
+                                    //Arcane magic idk why it works
+                                    getActivity().setTitle(mAuth.getCurrentUser().getDisplayName());
                                 }
                             });
                         }
