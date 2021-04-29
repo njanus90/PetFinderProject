@@ -63,18 +63,21 @@ public class MyProfileFragment extends Fragment {
         textViewName.setText(user.name);
         textViewEamail.setText(user.email);
 
-        if(user.id == mAuth.getCurrentUser().getUid() && user.name == mAuth.getCurrentUser().getDisplayName()){
+        //makes the button invisable because we didn't implement it yet
+        editAccountButton.setVisibility(view.INVISIBLE);
 
-            //if the editAccount button is clicked moves to the Edit account fragment
-            editAccountButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO: Implement edit account fragment
-                }
-            });
-        } else{
-            editAccountButton.setVisibility(view.INVISIBLE);
-        }
+//        if(user.id.equals(mAuth.getCurrentUser().getUid()) && user.name.equals(mAuth.getCurrentUser().getDisplayName())){
+//            editAccountButton.setVisibility(view.VISIBLE);
+//            //if the editAccount button is clicked moves to the Edit account fragment
+//            editAccountButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //TODO: Implement edit account fragment
+//                }
+//            });
+//        } else{
+//            editAccountButton.setVisibility(view.INVISIBLE);
+//        }
         buttonPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 * its also Parcelable so we can move it between fragments easily
  */
 public class User implements Parcelable {
-    String name,id, bio,email;
+    String name,id,email;
     ArrayList<PetPost> posts;
     Array pets;
 
@@ -26,7 +26,6 @@ public class User implements Parcelable {
     protected User(Parcel in) {
         name = in.readString();
         id = in.readString();
-        bio = in.readString();
         posts = in.createTypedArrayList(PetPost.CREATOR);
         email = in.readString();
     }
@@ -68,7 +67,6 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(id);
-        dest.writeString(bio);
         dest.writeTypedList(posts);
         dest.writeString(email);
     }

@@ -10,32 +10,26 @@
         android:id="@+id/textView21"
         android:layout_width="300dp"
         android:layout_height="100dp"
+        android:layout_marginTop="7dp"
         android:background="@drawable/box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="123dp" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/box"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonPosts" />
 
     <Button
         android:id="@+id/editAccountButton"
-        android:layout_width="0dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
         android:text="Edit Account"
         app:icon="@android:drawable/ic_menu_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView22"
-        app:layout_constraintStart_toStartOf="@+id/textView22"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintEnd_toEndOf="@+id/textView21"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView25"
@@ -47,16 +41,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="@+id/textView21"
         tools:layout_editor_absoluteY="166dp" />
-
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User Bio Placeholder"
-        app:layout_constraintBottom_toBottomOf="@+id/textView22"
-        app:layout_constraintEnd_toEndOf="@+id/textView22"
-        app:layout_constraintStart_toStartOf="@+id/textView22"
-        app:layout_constraintTop_toTopOf="@+id/textView22" />
 
     <Button
         android:id="@+id/buttonPosts"
@@ -84,17 +68,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
+        android:layout_marginTop="166dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="@+id/textView25"
-        app:layout_constraintStart_toEndOf="@+id/textView25" />
+        app:layout_constraintStart_toEndOf="@+id/textView25"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewEamail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="199dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintStart_toStartOf="@+id/textViewName" />
+        app:layout_constraintStart_toStartOf="@+id/textViewName"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView39"

@@ -71,11 +71,6 @@ public class MyPostsFragment extends Fragment {
 
         textViewAnyPosts = view.findViewById(R.id.textViewAnyPosts);
 
-        if(posts.isEmpty())
-        {
-            textViewAnyPosts.setVisibility(view.VISIBLE);
-        }
-
         recyclerViewMYPosts = view.findViewById(R.id.recyclerViewMYPosts);
 
         recyclerViewMYPosts.setHasFixedSize(true);
@@ -101,8 +96,15 @@ public class MyPostsFragment extends Fragment {
                     posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),use,doc.get("details").toString(),doc.get("image").toString(),null,null));
                 }
                 adapter.notifyDataSetChanged();
+                if(posts.isEmpty())
+                {
+                    textViewAnyPosts.setVisibility(view.VISIBLE);
+                } else {
+                    textViewAnyPosts.setVisibility(view.INVISIBLE);
+                }
             }
         });
+
 
 
         return view;

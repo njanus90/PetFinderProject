@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,8 +32,8 @@ public class InDepthPostFragment extends Fragment {
     TextView postPetName;
     TextView postPetDetails;
     TextView textViewLostFound;
-    TextView textViewUserName;
     ImageView imageView4;
+    Button buttonUser;
     StorageReference ref;
     FirebaseStorage storage;
     private PetPost mPost;
@@ -67,11 +68,11 @@ public class InDepthPostFragment extends Fragment {
         postPetName = view.findViewById(R.id.postPetName);
         postPetDetails = view.findViewById(R.id.postPetDetails);
         textViewLostFound = view.findViewById(R.id.textViewLostFound);
-        textViewUserName = view.findViewById(R.id.textViewUserName);
+        buttonUser = view.findViewById(R.id.buttonUser);
         imageView4 = view.findViewById(R.id.imageView4);
 
         //sets all the text views
-        textViewUserName.setText(mPost.user.name);
+        buttonUser.setText(mPost.user.name);
         postPetName.setText(mPost.name);
         postPetDetails.setText(mPost.details);
         textViewLostFound.setText(mPost.status);
@@ -89,7 +90,7 @@ public class InDepthPostFragment extends Fragment {
             }
         });
 
-        textViewUserName.setOnClickListener(new View.OnClickListener() {
+        buttonUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
