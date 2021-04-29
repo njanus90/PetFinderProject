@@ -25,12 +25,14 @@
         android:id="@+id/editAccountButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="316dp"
         android:text="Edit Account"
         app:icon="@android:drawable/ic_menu_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/buttonPosts"
-        app:layout_constraintStart_toStartOf="@+id/buttonPosts" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonPosts"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPosts" />
 
     <TextView
         android:id="@+id/textView25"

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,30 +62,27 @@ public class MyProfileFragment extends Fragment {
         buttonPosts = view.findViewById(R.id.buttonPosts);
 
         if(user.email.equals(mAuth.getCurrentUser().getEmail())){
+            //if the editAccount button is clicked moves to the Edit account fragment
             textViewName.setText(mAuth.getCurrentUser().getDisplayName());
+            editAccountButton.setVisibility(view.VISIBLE);
+            editAccountButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentLayout, new EditAccountFragment(), "MyPosts")
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         } else {
+            editAccountButton.setVisibility(view.INVISIBLE);
             textViewName.setText(user.name);
         }
         textViewEamail.setText(user.email);
 
         //makes the button invisable because we didn't implement it yet
-        editAccountButton.setVisibility(view.INVISIBLE);
+        //editAccountButton.setVisibility(view.INVISIBLE);
 
-
-
-//        if(user.id.equals(mAuth.getCurrentUser().getUid()) && user.name.equals(mAuth.getCurrentUser().getDisplayName())){
-//            //editAccountButton.setVisibility(view.VISIBLE);
-//            //if the editAccount button is clicked moves to the Edit account fragment
-//            textViewName.setText(mAuth.getCurrentUser().getDisplayName());
-////            editAccountButton.setOnClickListener(new View.OnClickListener() {
-////                @Override
-////                public void onClick(View v) {
-////                    //TODO: Implement edit account fragment
-////                }
-////            });
-////        } else{
-////            //editAccountButton.setVisibility(view.INVISIBLE);
-//        }
         buttonPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
