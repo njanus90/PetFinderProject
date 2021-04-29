@@ -43,6 +43,7 @@ public class PetPost implements Parcelable {
         }
     };
 
+    //just some setters and getters
     public String getStatus() {
         return status;
     }
