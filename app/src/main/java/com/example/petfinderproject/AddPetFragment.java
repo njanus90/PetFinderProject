@@ -213,7 +213,7 @@ public class AddPetFragment extends Fragment {
             progressDialog.show();
 
             // Defining the child of storageReference
-            ref = storageReference;//.child("images/" + UUID.randomUUID().toString());
+            ref = storageReference.child("images/" + UUID.randomUUID().toString());
 
             Log.d("SWAG", ref.toString());
 

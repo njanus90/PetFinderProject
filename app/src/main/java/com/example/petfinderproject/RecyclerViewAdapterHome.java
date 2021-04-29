@@ -63,6 +63,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         //holder.postPetName.setText(holder.p.name);
         //holder.postPetDetails.setText(holder.p.details);
         holder.textView30.setText(holder.p.status);
+        holder.textView39.setText(holder.p.user.name);
 
 //        storage = FirebaseStorage.getInstance();
 //        // Reference to an image file in Cloud Storage
@@ -97,6 +98,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         TextView postPetName;
         TextView postPetDetails;
         TextView textView30;
+        TextView textView39;
         PetPost p;
         ImageView imageView2;
 
@@ -106,6 +108,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
             postPetName = itemView.findViewById(R.id.postPetName);
             postPetDetails = itemView.findViewById(R.id.postPetDetails);
             textView30 = itemView.findViewById(R.id.textView30);
+            textView39 = itemView.findViewById(R.id.textView39);
             imageView2 = itemView.findViewById(R.id.imageView2);
 
             // when a button in the home page scrollable list is clicked it goes to an indepth
