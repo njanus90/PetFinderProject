@@ -87,8 +87,6 @@ public class MyProfileFragment extends Fragment {
                         .commit();
             }
         });
-
-
         return view;
     }
 }
