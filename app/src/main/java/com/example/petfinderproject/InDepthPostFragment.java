@@ -34,6 +34,7 @@ public class InDepthPostFragment extends Fragment {
     TextView textViewLostFound;
     ImageView imageView4;
     Button buttonUser;
+    Button postMapButton;
     StorageReference ref;
     FirebaseStorage storage;
     private PetPost mPost;
@@ -70,6 +71,7 @@ public class InDepthPostFragment extends Fragment {
         textViewLostFound = view.findViewById(R.id.textViewLostFound);
         buttonUser = view.findViewById(R.id.buttonUser);
         imageView4 = view.findViewById(R.id.imageView4);
+        postMapButton = view.findViewById(R.id.postMapButton);
 
         //sets all the text views
         buttonUser.setText(mPost.user.name);
@@ -96,6 +98,17 @@ public class InDepthPostFragment extends Fragment {
 
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(mPost.user), "Profile")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        //if the map button is clicked it moves to the map fragment
+        postMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, new MapsFragment(),"maps")
                         .addToBackStack(null)
                         .commit();
             }
