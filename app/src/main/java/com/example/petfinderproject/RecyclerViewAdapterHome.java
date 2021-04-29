@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.petfinderproject.PetPost;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,7 +41,6 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
     StorageReference ref;
     FirebaseStorage storage;
     StorageReference storageReference;
-    File localFile;
     Context context;
 
     public RecyclerViewAdapterHome(ArrayList<PetPost> posts, FragmentActivity A){
@@ -64,26 +64,26 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         //holder.postPetDetails.setText(holder.p.details);
         holder.textView30.setText(holder.p.status);
 
-        storage = FirebaseStorage.getInstance();
-        // Reference to an image file in Cloud Storage
-        ref = storage.getReference();
-        storageReference = ref.child(holder.p.image);
-
-
-
-        ref.child(holder.p.image).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful()){
-                    Log.d("SWAG", holder.p.image);
-                    String uri = task.getResult().toString();
-                    Picasso.get().load(uri).into(holder.imageView2);
-
-                } else {
-                    Log.d("SWAG", "NoWork");
-                }
-            }
-        });
+//        storage = FirebaseStorage.getInstance();
+//        // Reference to an image file in Cloud Storage
+//        ref = storage.getReference();
+//        storageReference = ref.child(holder.p.petPic);
+//
+//
+//
+//        ref.child(holder.p.petPic).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Uri> task) {
+//                if(task.isSuccessful()){
+//                    Log.d("SWAG", holder.p.petPic);
+//                    String uri = task.getResult().toString();
+//                    Picasso.get().load(uri).into(holder.imageView2);
+//
+//                } else {
+//                    Log.d("SWAG", "NoWork");
+//                }
+//            }
+//        });
 //         //Download directly from StorageReference using Glide
 //        Glide.with(context)
 //                .load(storageReference)

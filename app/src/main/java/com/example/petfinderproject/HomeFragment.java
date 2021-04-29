@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
                                         //posts.add(new PetPost(lost, petName ,new User(UserName,UserId),details,null,null,null));
                                         User u = new User(UserName.get("name").toString(),UserName.get("id").toString());
                                         Log.d(TAG, image);
-                                        posts.add(new PetPost(lost, petName ,u,details,null,null,null,image));
+                                        posts.add(new PetPost(lost, petName ,u,details,image,null,null));
                                     }
                                     adapter.notifyDataSetChanged();
                                 }

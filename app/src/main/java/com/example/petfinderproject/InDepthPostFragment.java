@@ -92,19 +92,20 @@ public class InDepthPostFragment extends Fragment {
         textView30.setText(mPost.status);
 
 
-        storage = FirebaseStorage.getInstance();
-        // Reference to an image file in Cloud Storage
-        ref = storage.getReference();
-
-        ref.child(mPost.image).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful()){
-                    Uri uri = task.getResult();
-                    Picasso.get().load(uri).into(imageView4);
-                }
-            }
-        });
+//        storage = FirebaseStorage.getInstance();
+//        // Reference to an image file in Cloud Storage
+//        ref = storage.getReference();
+//        storageReference = ref.child(mPost.petPic);
+//
+//        ref.child(mPost.petPic).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Uri> task) {
+//                if(task.isSuccessful()){
+//                    Uri uri = task.getResult();
+//                    Picasso.get().load(uri).into(imageView4);
+//                }
+//            }
+//        });
 
 //        // Download directly from StorageReference using Glide
 //        Glide.with(getContext())

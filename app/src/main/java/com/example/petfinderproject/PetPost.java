@@ -6,12 +6,12 @@ import android.widget.ImageView;
 //this is the class that stores the posts of the pet lost or found
 public class PetPost implements Parcelable {
 
-    String name, details, status, lat, lng, image;
+    String name, details, status, lat, lng;
     User user;
     //TODO: Some Map variable maybe?
-    ImageView petPic;
+    String petPic;
 
-    public PetPost(String status, String name, User user, String details, ImageView petPic, String lat, String lng,String image) {
+    public PetPost(String status, String name, User user, String details, String petPic, String lat, String lng) {
         this.status = status;
         this.name = name;
         this.details = details;
@@ -19,7 +19,6 @@ public class PetPost implements Parcelable {
         this.user = user;
         this.lat = lat;
         this.lng = lng;
-        this.image = image;
     }
 
     protected PetPost(Parcel in) {
@@ -29,6 +28,7 @@ public class PetPost implements Parcelable {
         lat = in.readString();
         lng = in.readString();
         user = in.readParcelable(User.class.getClassLoader());
+        petPic = in.readString();
     }
 
     public static final Creator<PetPost> CREATOR = new Creator<PetPost>() {
@@ -67,11 +67,11 @@ public class PetPost implements Parcelable {
         this.details = details;
     }
 
-    public ImageView getPetPic() {
+    public String getPetPic() {
         return petPic;
     }
 
-    public void setPetPic(ImageView petPic) {
+    public void setPetPic(String petPic) {
         this.petPic = petPic;
     }
 
@@ -88,5 +88,6 @@ public class PetPost implements Parcelable {
         dest.writeString(status);
         dest.writeString(lat);
         dest.writeString(lng);
+        dest.writeString(petPic);
     }
 }

@@ -67,23 +67,6 @@ public class MyPostsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_posts, container, false);
         auth = FirebaseAuth.getInstance();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference postOrder = db.collection("users").document(auth.getCurrentUser().getUid()).collection("posts");
-        postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                posts.clear();
-                for(QueryDocumentSnapshot doc: value) {
-                    //since we can't just get the object we from firestore we get it as a hashmap and convert that into a user object
-                    HashMap u = (HashMap) (doc.get("user"));
-                    User use = new User(u.get("name").toString(),u.get("id").toString());
-                    //adds a new petPost to the posts array
-                    posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),use,doc.get("details").toString(),null,null,null,doc.get("image").toString()));
-                }
-                adapter.notifyDataSetChanged();
-            }
-        });
-
         recyclerViewMYPosts = view.findViewById(R.id.recyclerViewMYPosts);
 
         recyclerViewMYPosts.setHasFixedSize(true);
@@ -94,6 +77,26 @@ public class MyPostsFragment extends Fragment {
         //makes an RecuclerViewAdapter which we created and sets it to the recyclerView
         adapter = new RecyclerViewAdapterHome(posts, getActivity());
         recyclerViewMYPosts.setAdapter(adapter);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference postOrder = db.collection("users").document(auth.getCurrentUser().getUid()).collection("posts");
+        postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                posts.clear();
+                for(QueryDocumentSnapshot doc: value) {
+                    Log.d(TAG, doc.get("user").toString());
+                    //since we can't just get the object we from firestore we get it as a hashmap and convert that into a user object
+                    HashMap u = (HashMap) (doc.get("user"));
+                    User use = new User(u.get("name").toString(),u.get("id").toString());
+                    //adds a new petPost to the posts array
+                    posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),use,doc.get("details").toString(),doc.get("image").toString(),null,null));
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+        Log.d(TAG, posts.toString());
+
 
         return view;
     }
