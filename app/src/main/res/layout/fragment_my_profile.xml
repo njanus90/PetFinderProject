@@ -8,28 +8,29 @@
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPosts" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/editAccountButton"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginBottom="32dp"
         android:text="Edit Account"
         app:icon="@android:drawable/ic_menu_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView21"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonPosts"
+        app:layout_constraintStart_toStartOf="@+id/buttonPosts" />
 
     <TextView
         android:id="@+id/textView25"
@@ -37,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="16dp"
         android:text="User Name:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintEnd_toStartOf="@+id/textView39"
@@ -46,13 +46,13 @@
 
     <Button
         android:id="@+id/buttonPosts"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:text="Click to see Posts"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/textView21"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/textView12"
@@ -61,6 +61,7 @@
         android:layout_marginTop="8dp"
         android:text="User Emal:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="@+id/textView25"
         app:layout_constraintStart_toStartOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
@@ -70,21 +71,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="166dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="@+id/textView25"
         app:layout_constraintStart_toEndOf="@+id/textView25"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textView25" />
 
     <TextView
         android:id="@+id/textViewEamail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="199dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="@+id/textView12"
         app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/textView39"
@@ -93,6 +92,7 @@
         android:layout_marginTop="8dp"
         android:text="Contact Info:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textView21"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/textView21"
