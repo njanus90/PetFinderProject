@@ -106,13 +106,13 @@
         android:id="@+id/textView40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
         android:text="User:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewLostFound"
-        app:layout_constraintTop_toTopOf="@+id/textViewLostFound"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="222dp" />
+        app:layout_constraintStart_toEndOf="@+id/textViewLostFound"
+        app:layout_constraintTop_toTopOf="@+id/textViewLostFound" />
 
     <ImageView
         android:id="@+id/imageView4"
