@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -25,6 +26,7 @@ public class LoginFragment extends Fragment {
     private FirebaseAuth mAuth;
     Button loginButton, forgotPassword;
     EditText loginEmail, loginPassword;
+    Toolbar myToolbar;
 
 
     public LoginFragment() {// Required empty public constructor
@@ -53,6 +55,7 @@ public class LoginFragment extends Fragment {
         forgotPassword = view.findViewById(R.id.forgotPassword);
         loginEmail = view.findViewById(R.id.loginEmail);
         loginPassword = view.findViewById(R.id.loginPassword);
+        myToolbar = view.findViewById(R.id.toolbar);
 
         //when the login button is clicked
         loginButton.setOnClickListener(new View.OnClickListener() {

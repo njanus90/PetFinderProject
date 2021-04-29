@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -64,7 +65,7 @@ public class AddPetFragment extends Fragment {
     private User user;
     private String lost;
 
-
+    private FirebaseAuth mAuth;
     Switch statusSwitch;
     Button browseButton, addMapButton, addSubmitButton;
     EditText addPetName, addDetails;
@@ -104,6 +105,8 @@ public class AddPetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_pet, container, false);
+        mAuth = FirebaseAuth.getInstance();
+        getActivity().setTitle(mAuth.getCurrentUser().getDisplayName());
 
         //finds the needed view items
         statusSwitch = view.findViewById(R.id.statusSwitch);
