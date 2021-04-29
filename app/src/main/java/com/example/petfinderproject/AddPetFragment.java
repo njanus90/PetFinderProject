@@ -58,6 +58,7 @@ public class AddPetFragment extends Fragment {
 
     private User user;
     private String lost;
+    private String path;
 
 
     Switch statusSwitch;
@@ -206,7 +207,7 @@ public class AddPetFragment extends Fragment {
     // UploadImage method
     private void uploadImage() {
         if (filePath != null) {
-            Log.d(TAG, filePath.toString());
+            Log.d(TAG, filePath.toString() + "FILEPATH");
             // Code for showing progressDialog while uploading
             ProgressDialog progressDialog
                     = new ProgressDialog(getContext());
@@ -214,9 +215,10 @@ public class AddPetFragment extends Fragment {
             progressDialog.show();
 
             // Defining the child of storageReference
-            ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            path = "images/" + UUID.randomUUID().toString();
+            ref = storageReference.child(path);
 
-            Log.d("SWAG", ref.toString());
+            //Log.d("SWAG", ref.toString() + "  REF");
 
             // adding listeners on upload
             // or failure of image

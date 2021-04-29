@@ -37,11 +37,11 @@ import java.util.UUID;
 public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAdapterHome.UserViewholder> {
     ArrayList<PetPost> posts;
     FragmentActivity A;
+
+    private static String TAG = "SWAG";
     // instance for firebase storage and StorageReference
     StorageReference ref;
     FirebaseStorage storage;
-    StorageReference storageReference;
-    Context context;
 
     public RecyclerViewAdapterHome(ArrayList<PetPost> posts, FragmentActivity A){
         this.posts = posts;
@@ -51,7 +51,6 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public RecyclerViewAdapterHome.UserViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_post,parent,false);
-        context = parent.getContext();
         RecyclerViewAdapterHome.UserViewholder userViewholder = new RecyclerViewAdapterHome.UserViewholder(view);
 
         return userViewholder;
@@ -65,30 +64,18 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         holder.textView30.setText(holder.p.status);
         holder.textView39.setText(holder.p.user.name);
 
-//        storage = FirebaseStorage.getInstance();
-//        // Reference to an image file in Cloud Storage
-//        ref = storage.getReference();
-//        storageReference = ref.child(holder.p.petPic);
-//
-//
-//
-//        ref.child(holder.p.petPic).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Uri> task) {
-//                if(task.isSuccessful()){
-//                    Log.d("SWAG", holder.p.petPic);
-//                    String uri = task.getResult().toString();
-//                    Picasso.get().load(uri).into(holder.imageView2);
-//
-//                } else {
-//                    Log.d("SWAG", "NoWork");
-//                }
-//            }
-//        });
-//         //Download directly from StorageReference using Glide
-//        Glide.with(context)
-//                .load(storageReference)
-//                .into(holder.imageView2);
+        //gets the storage instance
+        storage = FirebaseStorage.getInstance();
+        // Reference to an image file in Cloud Storage using the url of the image
+        ref = storage.getReferenceFromUrl(holder.p.petPic);
+
+        //downloads the URL of the image and puts it in the required imageview using picasso
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(holder.imageView2);
+            }
+        });
     }
 
     @Override

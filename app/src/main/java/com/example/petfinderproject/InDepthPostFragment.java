@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -49,7 +50,6 @@ public class InDepthPostFragment extends Fragment {
     // instance for firebase storage and StorageReference
     StorageReference ref;
     FirebaseStorage storage;
-    StorageReference storageReference;
 
     private PetPost mPost;
 
@@ -91,26 +91,18 @@ public class InDepthPostFragment extends Fragment {
         postPetDetails.setText(mPost.details);
         textView30.setText(mPost.status);
 
+        //gets the storage instance
+        storage = FirebaseStorage.getInstance();
+        // Reference to an image file in Cloud Storage using the url of the image
+        ref = storage.getReferenceFromUrl(mPost.petPic);
 
-//        storage = FirebaseStorage.getInstance();
-//        // Reference to an image file in Cloud Storage
-//        ref = storage.getReference();
-//        storageReference = ref.child(mPost.petPic);
-//
-//        ref.child(mPost.petPic).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Uri> task) {
-//                if(task.isSuccessful()){
-//                    Uri uri = task.getResult();
-//                    Picasso.get().load(uri).into(imageView4);
-//                }
-//            }
-//        });
-
-//        // Download directly from StorageReference using Glide
-//        Glide.with(getContext())
-//                .load(storageReference)
-//                .into(imageView4);
+        //downloads the URL of the image and puts it in the required imageview using picasso
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(imageView4);
+            }
+        });
         return view;
     }
 }
