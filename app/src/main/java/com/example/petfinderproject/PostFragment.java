@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class PostFragment extends Fragment {
+/*
+  * this fragment is here to hold a recyclerview of all the curren't user's posts
+  * so its like a place holder and doesn't do anything because it doesn't need to
+ */
 
-    Button postMapButton;
+public class PostFragment extends Fragment {
 
     private static final String ARG_USER = "user";
 

@@ -21,15 +21,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginFragment extends Fragment {
+    //variables we need
     private FirebaseAuth mAuth;
-
     Button loginButton, forgotPassword;
     EditText loginEmail, loginPassword;
 
 
-    public LoginFragment() {
-        // Required empty public constructor
-    }
+    public LoginFragment() {// Required empty public constructor
+         }
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -49,6 +48,7 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
+        //fills the variables
         loginButton = view.findViewById(R.id.loginButton);
         forgotPassword = view.findViewById(R.id.forgotPassword);
         loginEmail = view.findViewById(R.id.loginEmail);

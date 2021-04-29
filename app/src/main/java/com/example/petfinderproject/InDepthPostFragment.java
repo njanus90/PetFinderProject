@@ -47,13 +47,12 @@ public class InDepthPostFragment extends Fragment {
     TextView textView30;
     TextView textView39;
     ImageView imageView4;
-    // instance for firebase storage and StorageReference
     StorageReference ref;
     FirebaseStorage storage;
-
     private PetPost mPost;
 
-    public InDepthPostFragment() { }
+    public InDepthPostFragment() { //required empty constructor
+        }
 
     //the following two methods make it so the fragment can take in a post paramater
     public static InDepthPostFragment newInstance(PetPost post) {

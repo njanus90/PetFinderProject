@@ -50,6 +50,11 @@ import java.util.UUID;
 import static android.app.Activity.RESULT_OK;
 import static android.media.MediaRecorder.VideoSource.CAMERA;
 
+/*
+* Fragment to add a post to firestore. It associates the post with
+* the current user that is logged on and allows the user some options
+ */
+
 public class AddPetFragment extends Fragment {
 
     private static final String ARG_USER = "addPost";
@@ -58,7 +63,6 @@ public class AddPetFragment extends Fragment {
 
     private User user;
     private String lost;
-    private String path;
 
 
     Switch statusSwitch;
@@ -70,13 +74,11 @@ public class AddPetFragment extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference;
     Uri filePath;
-    //String selectedImage;
-    String picturePath;
 
     public AddPetFragment() {
         // Required empty public constructor
     }
-
+    //helps make a new AddPetFragment
     public static AddPetFragment newInstance(User user) {
         AddPetFragment fragment = new AddPetFragment();
         Bundle args = new Bundle();
@@ -91,6 +93,8 @@ public class AddPetFragment extends Fragment {
         if (getArguments() != null) {
             user = getArguments().getParcelable(ARG_USER);
         }
+        //this is here incase the user doens't touch the switch and
+        // because that would mean their pet is lost
         lost = "Lost";
     }
 
@@ -146,7 +150,6 @@ public class AddPetFragment extends Fragment {
                     Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_LONG).show();
                 } else {
                     //this puts the posts into firestore.
-                    // the commented lines are things we need to finish here
                     HashMap<String, Object> fourm = new HashMap<>();
                     fourm.put("PetName", addPetName.getText().toString());
                     fourm.put("lost", lost.toString());
@@ -180,7 +183,6 @@ public class AddPetFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Context context = getContext();
-            //selectedImage = data.getData();
             filePath = data.getData();
 
             try {
@@ -198,9 +200,6 @@ public class AddPetFragment extends Fragment {
                 // Log the exception
                 e.printStackTrace();
             }
-
-            //Log.d("SWAG", "OnResult" + picturePath);
-            //Picasso.get().load(selectedImage).into(imageView3);
         }
     }
 
@@ -208,17 +207,15 @@ public class AddPetFragment extends Fragment {
     private void uploadImage() {
         if (filePath != null) {
             Log.d(TAG, filePath.toString() + "FILEPATH");
+
             // Code for showing progressDialog while uploading
-            ProgressDialog progressDialog
-                    = new ProgressDialog(getContext());
+            // not really nessesary but it looks nice
+            ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            // Defining the child of storageReference
-            path = "images/" + UUID.randomUUID().toString();
-            ref = storageReference.child(path);
-
-            //Log.d("SWAG", ref.toString() + "  REF");
+            //defining the storage reference so we can know where we put the image in the storage
+            ref = storageReference.child("images/" + UUID.randomUUID().toString());
 
             // adding listeners on upload
             // or failure of image
@@ -233,14 +230,9 @@ public class AddPetFragment extends Fragment {
                                     // Image uploaded successfully
                                     // Dismiss dialog
                                     progressDialog.dismiss();
-                                    Toast
-                                            .makeText(getContext(),
-                                                    "Image Uploaded!!",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
+                                    Toast.makeText(getContext(),"Image Uploaded!!",Toast.LENGTH_SHORT).show();
                                 }
                             })
-
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -259,6 +251,7 @@ public class AddPetFragment extends Fragment {
 
                                 // Progress Listener for loading
                                 // percentage on the dialog box
+                                // again not nessesary but it looks nice and didn't take long to implement
                                 @Override
                                 public void onProgress(
                                         UploadTask.TaskSnapshot taskSnapshot) {

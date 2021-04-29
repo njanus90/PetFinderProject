@@ -30,7 +30,7 @@ public class ChangePasswordFragment extends Fragment {
     public ChangePasswordFragment() {
         // Required empty public constructor
     }
-
+    //makes the fragment
     public static ChangePasswordFragment newInstance() {
         ChangePasswordFragment fragment = new ChangePasswordFragment();
         Bundle args = new Bundle();
@@ -49,16 +49,20 @@ public class ChangePasswordFragment extends Fragment {
         // Inflate the layout for this fragment
        View view = inflater.inflate(R.layout.fragment_change_password, container, false);
 
+       //finds the elements we need
         confirmEmail = view.findViewById(R.id.confirmEmail);
         submitButtonChange = view.findViewById(R.id.submitButtonChange);
         mAuth = FirebaseAuth.getInstance();
 
+        //when the password change button is clicked
         submitButtonChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 //sends an email to the user prompting them to change their password
                 FirebaseAuth.getInstance().sendPasswordResetEmail(confirmEmail.getText().toString());
+
+                //goes back to the login fragment
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")
                         .addToBackStack(null)

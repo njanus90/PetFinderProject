@@ -8,6 +8,7 @@ import java.util.ArrayList;
 /*
 * This is our user class that we will be using throught the app
 * it takes in the name of the user and the id of the user that is used in firebase
+* its also Parcelable so we can move it between fragments easily
  */
 public class User implements Parcelable {
     String name,id, bio;

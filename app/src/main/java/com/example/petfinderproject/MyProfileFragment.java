@@ -11,8 +11,8 @@ import android.widget.Button;
 
 public class MyProfileFragment extends Fragment {
 
+    //variables we need
     private static final String ARG_USER = "user";
-
     private String user;
 
     Button editAccountButton;
@@ -21,6 +21,7 @@ public class MyProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
+    //creates the fragment
     public static MyProfileFragment newInstance(String user) {
         MyProfileFragment fragment = new MyProfileFragment();
         Bundle args = new Bundle();
@@ -43,8 +44,10 @@ public class MyProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
 
+        //fills the variables
         editAccountButton = view.findViewById(R.id.editAccountButton);
 
+        //if the editAccount button is clicked moves to the Edit account fragment
         editAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -35,18 +35,19 @@ import com.google.firebase.firestore.Source;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//this Fragment does most the work. It is the screen you see when you get logged in
 public class HomeFragment extends Fragment {
-    private FirebaseAuth mAuth;
 
+    //all the variables we need
+    private FirebaseAuth mAuth;
     private static final String ARG_USER = "user";
     private static final String TAG = "SWAG";
     private User user;
-
     Button allPostsButton, addLostOrFoundButton, chatButton, mapButton;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     RecyclerViewAdapterHome adapter;
-
+    //not sure we need this list of users but its nice to have
     ArrayList<User> users = new ArrayList<>();
     ArrayList<PetPost> posts = new ArrayList<>();
 
@@ -76,9 +77,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //fills the variables
         mAuth = FirebaseAuth.getInstance();
-
-
         allPostsButton = view.findViewById(R.id.allPostsButton);
         addLostOrFoundButton = view.findViewById(R.id.addLostOrFoundButton);
         mapButton = view.findViewById(R.id.mapButton);
@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
         getData();
 
 
-
+        //sets the recyclerview to the adapter we made for it
         recyclerView.setHasFixedSize(true);
         //gives the recyclerView a layoutManager
         layoutManager = new LinearLayoutManager(getActivity());
@@ -105,7 +105,6 @@ public class HomeFragment extends Fragment {
                         .replace(R.id.fragmentLayout, AddPetFragment.newInstance(user),"addPost")
                         .addToBackStack(null)
                         .commit();
-                //mListener.fromHomeToAdd(user);
             }
         });
 
@@ -136,21 +135,22 @@ public class HomeFragment extends Fragment {
 
     //this method gets all the data needed in the homepage from the firestore database
     private void getData(){
-        //Retrieves data from Database
+        //gets the firebase instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
+                        //clears the posts array and users array so we don't see things more than once
                         users.clear();
                         posts.clear();
+                        //loops through the users collection in firestore
                         for (QueryDocumentSnapshot document: value){
                             //adds a user to an array that we are not using
                             users.add(new User(document.getData().get("name").toString(),document.getId()));
                             //this gets the data from the post collection in the firestore it loops through all the
-                            // documents (users) and adds all their posts to an array that we pass into
+                            // post collection each user has and adds all their posts to an array that we pass into
                             // the recyclerview to list them on the main page.
                             db.collection("users").document(document.getId()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override

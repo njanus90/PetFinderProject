@@ -35,9 +35,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAdapterHome.UserViewholder> {
+    //variables we need
     ArrayList<PetPost> posts;
     FragmentActivity A;
-
     private static String TAG = "SWAG";
     // instance for firebase storage and StorageReference
     StorageReference ref;
@@ -50,6 +50,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
     @NonNull
     @Override
     public RecyclerViewAdapterHome.UserViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //inflates the layout and creates a viewholder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_post,parent,false);
         RecyclerViewAdapterHome.UserViewholder userViewholder = new RecyclerViewAdapterHome.UserViewholder(view);
 
@@ -59,8 +60,6 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull UserViewholder holder, int position) {
         holder.p = posts.get(position);
-        //holder.postPetName.setText(holder.p.name);
-        //holder.postPetDetails.setText(holder.p.details);
         holder.textView30.setText(holder.p.status);
         holder.textView39.setText(holder.p.user.name);
 
@@ -82,6 +81,7 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
     public int getItemCount() {return posts.size();}
 
     public class UserViewholder extends RecyclerView.ViewHolder {
+        //variables we need
         TextView postPetName;
         TextView postPetDetails;
         TextView textView30;
@@ -92,6 +92,8 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
 
         public UserViewholder(@NonNull View itemView) {
             super(itemView);
+
+            //fill the variables
             postPetName = itemView.findViewById(R.id.postPetName);
             postPetDetails = itemView.findViewById(R.id.postPetDetails);
             textView30 = itemView.findViewById(R.id.textView30);

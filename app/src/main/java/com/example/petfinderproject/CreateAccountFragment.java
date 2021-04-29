@@ -37,6 +37,7 @@ public class CreateAccountFragment extends Fragment {
         // Required empty public constructor
     }
 
+    //creates the fragment
     public static CreateAccountFragment newInstance() {
         CreateAccountFragment fragment = new CreateAccountFragment();
         Bundle args = new Bundle();
@@ -57,6 +58,7 @@ public class CreateAccountFragment extends Fragment {
 
         builder = new AlertDialog.Builder(getActivity());
 
+        //finds the elements in the xml we need
         createName = view.findViewById(R.id.createName);
         createEmail = view.findViewById(R.id.createEmail);
         createPassword = view.findViewById(R.id.createPassword);
@@ -109,6 +111,7 @@ public class CreateAccountFragment extends Fragment {
         db.collection("users").document(id)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    //if it works we move to the login fragment
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("demo", "onComplete: Success");
