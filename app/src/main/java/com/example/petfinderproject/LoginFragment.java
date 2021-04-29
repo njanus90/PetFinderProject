@@ -76,9 +76,10 @@ public class LoginFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         //Logged in successfully
                                         Log.d("demo", "onComplete: Success");
+                                        Log.d("SWAG", mAuth.getCurrentUser().getEmail());
                                         //moves to the HomeFragment with the currently logged in user attached
                                         getFragmentManager().beginTransaction()
-                                                .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid())), "home-screen")
+                                                .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail())), "home-screen")
                                                 .addToBackStack(null)
                                                 .commit();
                                     } else {

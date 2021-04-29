@@ -27,6 +27,7 @@ public class ChangePasswordFragment extends Fragment {
     private FirebaseAuth mAuth;
 
 
+
     public ChangePasswordFragment() {
         // Required empty public constructor
     }

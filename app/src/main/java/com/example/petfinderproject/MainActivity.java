@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 // User chose the "Settings" item, show the app settings UI...
                 this.user = user;
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(user), "my-profile-screen")
+                        .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail())), "my-profile-screen")
                         .addToBackStack(null)
                         .commit();
                 return true;

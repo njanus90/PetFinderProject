@@ -11,13 +11,15 @@ import java.util.ArrayList;
 * its also Parcelable so we can move it between fragments easily
  */
 public class User implements Parcelable {
-    String name,id, bio;
+    String name,id, bio,email;
     ArrayList<PetPost> posts;
     Array pets;
 
-    public User(String name,String id) {
+    public User(String name,String id,String email) {
         this.name = name;
         this.id = id;
+        this.email = email;
+
     }
 
 
@@ -26,6 +28,7 @@ public class User implements Parcelable {
         id = in.readString();
         bio = in.readString();
         posts = in.createTypedArrayList(PetPost.CREATOR);
+        email = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -52,6 +55,10 @@ public class User implements Parcelable {
         this.name = name;
     }
 
+    public void setEmail(String email){this.email = email;}
+
+    public String getEmail() {return email; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -63,5 +70,6 @@ public class User implements Parcelable {
         dest.writeString(id);
         dest.writeString(bio);
         dest.writeTypedList(posts);
+        dest.writeString(email);
     }
 }
