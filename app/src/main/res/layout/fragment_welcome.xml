@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
         android:src="@drawable/goodboy"
         app:layout_constraintBottom_toTopOf="@+id/homeLoginButton"
         app:layout_constraintEnd_toEndOf="parent"
