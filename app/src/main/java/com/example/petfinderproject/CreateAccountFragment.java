@@ -75,7 +75,9 @@ public class CreateAccountFragment extends Fragment {
                     builder.setMessage("Email missing") .setTitle("Error").create().show();
                 } else if(createPassword.getText().toString().isEmpty()){
                     builder.setMessage("Password missing") .setTitle("Error").create().show();
-                } else if(createName.getText().toString().isEmpty()){
+                } else if(confirmPassword.getText().toString().isEmpty()){
+                    builder.setMessage("Confirm Password") .setTitle("Error").create().show();
+                }else if(createName.getText().toString().isEmpty()){
                     builder.setMessage("Name missing") .setTitle("Error").create().show();
                 } else {
                     //makes the user using firbase authentication

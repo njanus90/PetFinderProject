@@ -21,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -72,7 +73,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "in Home Frag Create View");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -82,7 +82,13 @@ public class HomeFragment extends Fragment {
         addLostOrFoundButton = view.findViewById(R.id.addLostOrFoundButton);
         mapButton = view.findViewById(R.id.mapButton);
         recyclerView = view.findViewById(R.id.recyclerView);
-
+        FirebaseUser currUser = mAuth.getCurrentUser();
+        if(currUser == null){
+            Log.d(TAG, "there is a user");
+        }
+        else {
+            Log.d(TAG, "No User");
+        }
         getData();
 
 
@@ -135,7 +141,6 @@ public class HomeFragment extends Fragment {
 
     //this method gets all the data needed in the homepage from the firestore database
     private void getData(){
-        Log.d(TAG, "in GetData");
         //gets the firebase instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -145,32 +150,35 @@ public class HomeFragment extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         //clears the posts arrayso we don't see things more than once
                         posts.clear();
-                        //loops through the users collection in firestore
-                        for (QueryDocumentSnapshot document: value){
-                            //this gets the data from the post collection in the firestore it loops through all the
-                            // post collection each user has and adds all their posts to an array that we pass into
-                            // the recyclerview to list them on the main page.
-                            db.collection("users").document(document.getId()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        // checks to see if there are no errors
+                        if(error == null) {
+                            //loops through the users collection in firestore
+                            for (QueryDocumentSnapshot document : value) {
+                                //this gets the data from the post collection in the firestore it loops through all the
+                                // post collection each user has and adds all their posts to an array that we pass into
+                                // the recyclerview to list them on the main page.
+                                db.collection("users").document(document.getId()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                    for(int i =0; i < task.getResult().getDocuments().size(); i++) {
+                                        for (int i = 0; i < task.getResult().getDocuments().size(); i++) {
 
-                                        String lost = task.getResult().getDocuments().get(i).get("lost").toString();
-                                        String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
-                                        HashMap UserName = (HashMap)(task.getResult().getDocuments().get(i).get("user"));
-                                        String details = task.getResult().getDocuments().get(i).get("details").toString();
-                                        String image = task.getResult().getDocuments().get(i).get("image").toString();
-                                        //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
-                                        //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
-                                        User u = new User(UserName.get("name").toString(),UserName.get("id").toString(),UserName.get("email").toString());
-                                        posts.add(new PetPost(lost, petName ,u,details,image,null,null));
+                                            String lost = task.getResult().getDocuments().get(i).get("lost").toString();
+                                            String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
+                                            HashMap UserName = (HashMap) (task.getResult().getDocuments().get(i).get("user"));
+                                            String details = task.getResult().getDocuments().get(i).get("details").toString();
+                                            String image = task.getResult().getDocuments().get(i).get("image").toString();
+                                            //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
+                                            //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
+                                            User u = new User(UserName.get("name").toString(), UserName.get("id").toString(), UserName.get("email").toString());
+                                            posts.add(new PetPost(lost, petName, u, details, image, null, null));
+                                        }
+                                        adapter.notifyDataSetChanged();
                                     }
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
+                                });
+                            }
+                            adapter.notifyDataSetChanged();
                         }
-                        adapter.notifyDataSetChanged();
                     }
                 });
     }

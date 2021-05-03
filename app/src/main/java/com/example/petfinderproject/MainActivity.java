@@ -26,12 +26,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+/*
+* this is the main activity which all the fragments are run out of
+ */
 public class MainActivity extends AppCompatActivity {
 
     RelativeLayout containerView;
     Toolbar myToolbar;
-    //String user;
-
     FirebaseAuth mAuth;
 
     @Override
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navProfile:
                 // User chose the "Settings" item, show the app settings UI...
-                //this.user = mAuth.getCurrentUser().getDisplayName();
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail())), "my-profile-screen")
@@ -86,22 +87,14 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.navLogOut:
                 //gets rid of all stuff on backstack
-//                int count = getSupportFragmentManager().getBackStackEntryCount();
-//                for (int i = 0; i < count; i++)
-//                {
-//                    getSupportFragmentManager().popBackStack();
-//                }
-//                Log.d("SWAG", "Before Signout ");
-//                mAuth.signOut();
-//                Log.d("SWAG", "After Signout ");
-                //TODO: Implement proper sign out
-                //this.user = null;
+
+                mAuth.signOut();
+
                 setTitle("PetFinder");
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentLayout, WelcomeFragment.newInstance(), "welcome-screen")
+                        .replace(R.id.fragmentLayout, new WelcomeFragment(), "welcome-screen")
                         .addToBackStack(null)
                         .commit();
-
                 return true;
 
             default:
