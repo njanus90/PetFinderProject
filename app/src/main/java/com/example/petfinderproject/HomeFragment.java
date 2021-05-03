@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         //clears the posts arrayso we don't see things more than once
                         posts.clear();
-                        // checks to see if there are no errors
+                        // checks to see if there are no errors this solved the logout error
                         if(error == null) {
                             //loops through the users collection in firestore
                             for (QueryDocumentSnapshot document : value) {
@@ -177,11 +177,14 @@ public class HomeFragment extends Fragment {
                                         }catch (Exception e) {
                                             //does nothing cause we don't want to print the error.
                                         }
-
+                                        // this updates the adapter so we can see the new posts immidetly even on other
+                                        // devices
                                         adapter.notifyDataSetChanged();
                                     }
                                 });
                             }
+                            // this updates the adapter so we can see the new posts immidetly even on other
+                            // devices
                             adapter.notifyDataSetChanged();
                         }
                     }
