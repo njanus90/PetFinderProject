@@ -43,12 +43,10 @@ public class HomeFragment extends Fragment {
     private static final String ARG_USER = "user";
     private static final String TAG = "SWAG";
     private User user;
-    Button allPostsButton, addLostOrFoundButton, chatButton, mapButton;
+    Button allPostsButton, addLostOrFoundButton, mapButton;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     RecyclerViewAdapterHome adapter;
-    //not sure we need this list of users but its nice to have
-    //ArrayList<User> users = new ArrayList<>();
     ArrayList<PetPost> posts = new ArrayList<>();
 
     public HomeFragment() {
@@ -74,6 +72,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "in Home Frag Create View");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -136,6 +135,7 @@ public class HomeFragment extends Fragment {
 
     //this method gets all the data needed in the homepage from the firestore database
     private void getData(){
+        Log.d(TAG, "in GetData");
         //gets the firebase instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -143,14 +143,10 @@ public class HomeFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        //clears the posts array and users array so we don't see things more than once
-                        //users.clear();
+                        //clears the posts arrayso we don't see things more than once
                         posts.clear();
                         //loops through the users collection in firestore
                         for (QueryDocumentSnapshot document: value){
-                            //Log.d(TAG, document.getData().get("email").toString());
-                            //adds a user to an array that we are not using
-                            //users.add(new User(document.getData().get("name").toString(),document.getId(),document.getData().get("email").toString()));
                             //this gets the data from the post collection in the firestore it loops through all the
                             // post collection each user has and adds all their posts to an array that we pass into
                             // the recyclerview to list them on the main page.
@@ -167,19 +163,10 @@ public class HomeFragment extends Fragment {
                                         String image = task.getResult().getDocuments().get(i).get("image").toString();
                                         //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
                                         //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
-                                        //posts.add(new PetPost(lost, petName ,new User(UserName,UserId),details,null,null,null));
                                         User u = new User(UserName.get("name").toString(),UserName.get("id").toString(),UserName.get("email").toString());
                                         posts.add(new PetPost(lost, petName ,u,details,image,null,null));
                                     }
                                     adapter.notifyDataSetChanged();
-                                }
-                            });
-
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //Arcane magic idk why it works
-                                    getActivity().setTitle(mAuth.getCurrentUser().getDisplayName());
                                 }
                             });
                         }

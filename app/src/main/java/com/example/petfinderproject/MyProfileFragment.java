@@ -21,6 +21,7 @@ public class MyProfileFragment extends Fragment {
     TextView textViewName;
     TextView textViewEamail;
     Button buttonPosts;
+    Button buttonHome;
     private FirebaseAuth mAuth;
 
 
@@ -53,17 +54,26 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
-
         //fills the variables
         mAuth = FirebaseAuth.getInstance();
         editAccountButton = view.findViewById(R.id.editAccountButton);
         textViewName = view.findViewById(R.id.textViewName);
         textViewEamail = view.findViewById(R.id.textViewEamail);
         buttonPosts = view.findViewById(R.id.buttonPosts);
+        buttonHome = view.findViewById(R.id.buttonHome);
 
-        if(user.email.equals(mAuth.getCurrentUser().getEmail())){
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "MyPosts")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        textViewName.setText(user.name);
+        if(user.email.equals(mAuth.getCurrentUser().getEmail())&& user.name.equals(mAuth.getCurrentUser().getDisplayName())){
             //if the editAccount button is clicked moves to the Edit account fragment
-            textViewName.setText(mAuth.getCurrentUser().getDisplayName());
             editAccountButton.setVisibility(view.VISIBLE);
             editAccountButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,12 +86,8 @@ public class MyProfileFragment extends Fragment {
             });
         } else {
             editAccountButton.setVisibility(view.INVISIBLE);
-            textViewName.setText(user.name);
         }
         textViewEamail.setText(user.email);
-
-        //makes the button invisable because we didn't implement it yet
-        //editAccountButton.setVisibility(view.INVISIBLE);
 
         buttonPosts.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout containerView;
     Toolbar myToolbar;
-    String user;
+    //String user;
 
     FirebaseAuth mAuth;
 
@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Gets the tool bar to set it after you login
-
         myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
@@ -77,25 +76,36 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navProfile:
                 // User chose the "Settings" item, show the app settings UI...
-                this.user = mAuth.getCurrentUser().getDisplayName();
+                //this.user = mAuth.getCurrentUser().getDisplayName();
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail())), "my-profile-screen")
+                        .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail())), "my-profile-screen")
                         .addToBackStack(null)
                         .commit();
                 return true;
 
             case R.id.navLogOut:
+                //gets rid of all stuff on backstack
+//                int count = getSupportFragmentManager().getBackStackEntryCount();
+//                for (int i = 0; i < count; i++)
+//                {
+//                    getSupportFragmentManager().popBackStack();
+//                }
+//                Log.d("SWAG", "Before Signout ");
+//                mAuth.signOut();
+//                Log.d("SWAG", "After Signout ");
                 //TODO: Implement proper sign out
-                this.user = null;
-                setTitle(user);
+                //this.user = null;
+                setTitle("PetFinder");
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, WelcomeFragment.newInstance(), "welcome-screen")
                         .addToBackStack(null)
                         .commit();
+
                 return true;
 
             default:
+
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);

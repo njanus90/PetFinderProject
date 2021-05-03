@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,10 +61,8 @@ public class ChangePasswordFragment extends Fragment {
         submitButtonChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 //sends an email to the user prompting them to change their password
-                FirebaseAuth.getInstance().sendPasswordResetEmail(confirmEmail.getText().toString());
-
+                mAuth.sendPasswordResetEmail(confirmEmail.getText().toString());
                 //goes back to the login fragment
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, LoginFragment.newInstance(), "login-screen")

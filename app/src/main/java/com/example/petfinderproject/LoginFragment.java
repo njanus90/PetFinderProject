@@ -79,7 +79,7 @@ public class LoginFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         //Logged in successfully
                                         Log.d("demo", "onComplete: Success");
-                                        Log.d("SWAG", mAuth.getCurrentUser().getEmail());
+                                        getActivity().setTitle(mAuth.getCurrentUser().getDisplayName());
                                         //moves to the HomeFragment with the currently logged in user attached
                                         getFragmentManager().beginTransaction()
                                                 .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail())), "home-screen")
@@ -88,7 +88,7 @@ public class LoginFragment extends Fragment {
                                     } else {
                                         //Log in fail
                                         Log.d("demo", "onComplete: Fail");
-                                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT);
+                                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

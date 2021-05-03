@@ -25,14 +25,16 @@
         android:id="@+id/editAccountButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
         android:layout_marginBottom="316dp"
         android:text="Edit Account"
         app:icon="@android:drawable/ic_menu_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/buttonPosts"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonPosts"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPosts" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonHome"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonHome"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHome"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView25"
@@ -99,5 +101,15 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/textView21"
         app:layout_constraintTop_toTopOf="@+id/textView21" />
+
+    <Button
+        android:id="@+id/buttonHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="59dp"
+        android:text="Go to Home Screen"
+        app:layout_constraintEnd_toEndOf="@+id/buttonPosts"
+        app:layout_constraintStart_toStartOf="@+id/buttonPosts"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPosts" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
