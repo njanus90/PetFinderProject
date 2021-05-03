@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout containerView;
     Toolbar myToolbar;
     FirebaseAuth mAuth;
-    //public toolbar items 
+    //public toolbar items
     public static MenuItem prof;
     public static MenuItem log;
 
@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
 
                 mAuth.signOut();
                 setTitle("PetFinder");
+                //sets the items in the tool bar invisable
+                MainActivity.prof.setVisible(false);
+                MainActivity.log.setVisible(false);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, new WelcomeFragment(), "welcome-screen")
                         .addToBackStack(null)

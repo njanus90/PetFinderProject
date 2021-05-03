@@ -160,19 +160,27 @@ public class HomeFragment extends Fragment {
                                 db.collection("users").document(document.getId()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        //if the user loggs out to quickly the app will throw a insufficient permissions error
+                                        // this try/catch prevents it from crashing the app
+                                        try {
+                                            //Log.d(TAG, task.getResult().toString());
+                                            for (int i = 0; i < task.getResult().getDocuments().size(); i++) {
 
-                                        for (int i = 0; i < task.getResult().getDocuments().size(); i++) {
-
-                                            String lost = task.getResult().getDocuments().get(i).get("lost").toString();
-                                            String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
-                                            HashMap UserName = (HashMap) (task.getResult().getDocuments().get(i).get("user"));
-                                            String details = task.getResult().getDocuments().get(i).get("details").toString();
-                                            String image = task.getResult().getDocuments().get(i).get("image").toString();
-                                            //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
-                                            //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
-                                            User u = new User(UserName.get("name").toString(), UserName.get("id").toString(), UserName.get("email").toString());
-                                            posts.add(new PetPost(lost, petName, u, details, image, null, null));
+                                                String lost = task.getResult().getDocuments().get(i).get("lost").toString();
+                                                String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
+                                                HashMap UserName = (HashMap) (task.getResult().getDocuments().get(i).get("user"));
+                                                String details = task.getResult().getDocuments().get(i).get("details").toString();
+                                                String image = task.getResult().getDocuments().get(i).get("image").toString();
+                                                //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
+                                                //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
+                                                User u = new User(UserName.get("name").toString(), UserName.get("id").toString(), UserName.get("email").toString());
+                                                posts.add(new PetPost(lost, petName, u, details, image, null, null));
+                                            }
+                                        }catch (Exception e) {
+                                            //Log.d(TAG, e.toString());
+                                            //does nothing cause we don't want to print the error.
                                         }
+
                                         adapter.notifyDataSetChanged();
                                     }
                                 });
