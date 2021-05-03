@@ -26,7 +26,6 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
     //variables we need
     ArrayList<PetPost> posts;
     FragmentActivity A;
-    private static String TAG = "SWAG";
     // instance for firebase storage and StorageReference
     StorageReference ref;
     FirebaseStorage storage;

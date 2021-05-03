@@ -48,7 +48,6 @@ public class HomeFragment extends Fragment {
     //all the variables we need
     private FirebaseAuth mAuth;
     private static final String ARG_USER = "user";
-    private static final String TAG = "SWAG";
     private User user;
     Button allPostsButton, addLostOrFoundButton, mapButton;
     RecyclerView recyclerView;
@@ -163,7 +162,6 @@ public class HomeFragment extends Fragment {
                                         //if the user loggs out to quickly the app will throw a insufficient permissions error
                                         // this try/catch prevents it from crashing the app
                                         try {
-                                            //Log.d(TAG, task.getResult().toString());
                                             for (int i = 0; i < task.getResult().getDocuments().size(); i++) {
 
                                                 String lost = task.getResult().getDocuments().get(i).get("lost").toString();
@@ -177,7 +175,6 @@ public class HomeFragment extends Fragment {
                                                 posts.add(new PetPost(lost, petName, u, details, image, null, null));
                                             }
                                         }catch (Exception e) {
-                                            //Log.d(TAG, e.toString());
                                             //does nothing cause we don't want to print the error.
                                         }
 

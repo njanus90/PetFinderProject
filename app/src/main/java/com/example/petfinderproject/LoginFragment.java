@@ -84,7 +84,6 @@ public class LoginFragment extends Fragment {
                                     Toast.makeText(getContext(), "Made it", Toast.LENGTH_SHORT);
                                     if (task.isSuccessful()) {
                                         //Logged in successfully
-                                        Log.d("demo", "onComplete: Success");
                                         getActivity().setTitle(mAuth.getCurrentUser().getDisplayName());
 
                                         //sets the items in the tool bar visable
@@ -98,7 +97,6 @@ public class LoginFragment extends Fragment {
                                                 .commit();
                                     } else {
                                         //Log in fail
-                                        Log.d("demo", "onComplete: Fail");
                                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                                     }
                                 }

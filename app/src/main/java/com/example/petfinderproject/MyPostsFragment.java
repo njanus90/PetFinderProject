@@ -37,7 +37,6 @@ public class MyPostsFragment extends Fragment {
     FirebaseAuth auth;
 
     private static final String ARG_USER = "MyPosts";
-    private static final String TAG = "SWAG";
     private String user;
     ArrayList<PetPost> posts = new ArrayList<>();
 

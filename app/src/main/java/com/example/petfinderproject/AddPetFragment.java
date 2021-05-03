@@ -63,7 +63,6 @@ public class AddPetFragment extends Fragment {
 
     private static final String ARG_USER = "addPost";
     private static int RESULT_LOAD_IMAGE = 1;
-    private static String TAG = "SWAG";
 
     private User user;
     private String lost;

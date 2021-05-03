@@ -123,7 +123,6 @@ public class CreateAccountFragment extends Fragment {
                     //if it works we move to the login fragment
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("demo", "onComplete: Success");
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, new LoginFragment())
                                 .addToBackStack(null)
