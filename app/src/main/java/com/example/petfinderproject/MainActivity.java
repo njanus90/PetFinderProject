@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout containerView;
     Toolbar myToolbar;
     FirebaseAuth mAuth;
+    //public toolbar items 
+    public static MenuItem prof;
+    public static MenuItem log;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +51,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         containerView = findViewById(R.id.fragmentLayout);
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentLayout, new WelcomeFragment(), "welcome-screen")
                 .commit();
+
 
         //TODO: Potential consistent login implementation, not tested
         /*if(mAuth.getCurrentUser() == null){
@@ -69,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar, menu);
+
+        //the toolbar items
+        prof = menu.findItem(R.id.navProfile);
+        log = menu.findItem(R.id.navLogOut);
+
         return true;
     }
 
@@ -89,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 //gets rid of all stuff on backstack
 
                 mAuth.signOut();
-
                 setTitle("PetFinder");
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, new WelcomeFragment(), "welcome-screen")

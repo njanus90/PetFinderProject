@@ -34,6 +34,7 @@ public class LoginFragment extends Fragment {
     Toolbar myToolbar;
 
 
+
     public LoginFragment() {// Required empty public constructor
          }
 
@@ -47,6 +48,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -54,7 +56,6 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
         //fills the variables
         loginButton = view.findViewById(R.id.loginButton);
         forgotPassword = view.findViewById(R.id.forgotPassword);
@@ -85,6 +86,11 @@ public class LoginFragment extends Fragment {
                                         //Logged in successfully
                                         Log.d("demo", "onComplete: Success");
                                         getActivity().setTitle(mAuth.getCurrentUser().getDisplayName());
+
+                                        //sets the items in the tool bar visable
+                                        MainActivity.prof.setVisible(true);
+                                        MainActivity.log.setVisible(true);
+
                                         //moves to the HomeFragment with the currently logged in user attached
                                         getFragmentManager().beginTransaction()
                                                 .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail())), "home-screen")

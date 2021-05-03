@@ -5,10 +5,12 @@
         android:id="@+id/navProfile"
         android:icon="@android:drawable/ic_dialog_info"
         android:title="My Profile"
+        android:visible="false"
         app:showAsAction="always" />
     <item
         android:id="@+id/navLogOut"
         android:icon="@android:drawable/ic_menu_revert"
         android:title="Log Out"
+        android:visible="false"
         app:showAsAction="always" />
 </menu>
