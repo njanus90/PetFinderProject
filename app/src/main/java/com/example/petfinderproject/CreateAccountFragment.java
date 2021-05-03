@@ -26,6 +26,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
+/*
+* Fragment to handle the creation of an account. the user inputs
+* their name, email, and password and when the submit button is clicked
+* firebase authentication is used to create a user account.
+ */
+
 public class CreateAccountFragment extends Fragment {
     private FirebaseAuth mAuth;
 

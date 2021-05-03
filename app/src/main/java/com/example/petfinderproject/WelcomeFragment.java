@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-
+/*
+* this is the welcome fragment. it is the first thing a user sees when they open the app
+* has a nice picture of a dog, the title of our app, and a create users button and a login button.
+ */
 public class WelcomeFragment extends Fragment {
 
     FirebaseAuth mAuth;

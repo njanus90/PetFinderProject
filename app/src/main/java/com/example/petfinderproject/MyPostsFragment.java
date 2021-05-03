@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyPostsFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to list the posts of a user.
+ * this is used to see anyones posts not just the current users posts.
+ * you can click on the posts to see a more indepth view of them.
  */
 public class MyPostsFragment extends Fragment {
     RecyclerView recyclerViewMYPosts;
@@ -88,19 +88,20 @@ public class MyPostsFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 posts.clear();
-                for(QueryDocumentSnapshot doc: value) {
-                    //since we can't just get the object we from firestore we get it as a hashmap and convert that into a user object
-                    HashMap u = (HashMap) (doc.get("user"));
-                    User use = new User(u.get("name").toString(),u.get("id").toString(),u.get("email").toString());
-                    //adds a new petPost to the posts array
-                    posts.add(new PetPost(doc.get("lost").toString(),doc.get("PetName").toString(),use,doc.get("details").toString(),doc.get("image").toString(),null,null));
-                }
-                adapter.notifyDataSetChanged();
-                if(posts.isEmpty())
-                {
-                    textViewAnyPosts.setVisibility(view.VISIBLE);
-                } else {
-                    textViewAnyPosts.setVisibility(view.INVISIBLE);
+                if (error == null) {
+                    for (QueryDocumentSnapshot doc : value) {
+                        //since we can't just get the object we from firestore we get it as a hashmap and convert that into a user object
+                        HashMap u = (HashMap) (doc.get("user"));
+                        User use = new User(u.get("name").toString(), u.get("id").toString(), u.get("email").toString());
+                        //adds a new petPost to the posts array
+                        posts.add(new PetPost(doc.get("lost").toString(), doc.get("PetName").toString(), use, doc.get("details").toString(), doc.get("image").toString(), null, null));
+                    }
+                    adapter.notifyDataSetChanged();
+                    if (posts.isEmpty()) {
+                        textViewAnyPosts.setVisibility(view.VISIBLE);
+                    } else {
+                        textViewAnyPosts.setVisibility(view.INVISIBLE);
+                    }
                 }
             }
         });

@@ -12,7 +12,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-
+/*
+* Fragment to see a users profile
+* used to see anyone's profile not just the users
+* done by taking in a user and using that infomation to
+* list user details. if you're looking at your own profile you'll
+* be able to click the edit details button and edit your account details
+* you can also go to the home page or view all of the posts of the user.
+ */
 public class MyProfileFragment extends Fragment {
 
     //variables we need

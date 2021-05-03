@@ -22,9 +22,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+/*
+ * this fragment handles the changing of the password.
+ * the user inputs their email and an email is sent to them prompting them to change their password
+ * once the submit buttion is clicked
+ */
+
 public class ChangePasswordFragment extends Fragment {
 
-    EditText confirmEmail, newChangePassword, confirmChangePassword;
+    EditText confirmEmail;
     Button submitButtonChange;
     private FirebaseAuth mAuth;
 

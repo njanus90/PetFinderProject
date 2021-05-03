@@ -17,7 +17,11 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
+/*
+* Adapter for all the recyclerviews used. (RecyclerViews are just scrollable lists essentially)
+* takes in a list of posts and the fragment activity. Displays the list of posts and uses
+* the activity to create another fragment. You can click on a post to see it more indepth.
+ */
 public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAdapterHome.UserViewholder> {
     //variables we need
     ArrayList<PetPost> posts;

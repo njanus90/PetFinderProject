@@ -18,15 +18,16 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link InDepthPostFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment for when a user clicks to see a post.
+ * it will show important information of a post.
+ * you can also click on the user who posted it to see their profile.
+ * you can see the locaion the pet was last seen when you click on the map button, and you can
+ * see the name and details of the pet
  */
 public class InDepthPostFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "post";
-    private static final String TAG = "SWAG";
 
     //all variables
     TextView postPetName;

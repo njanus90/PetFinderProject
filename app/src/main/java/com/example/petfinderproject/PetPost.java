@@ -3,7 +3,14 @@ package com.example.petfinderproject;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
-//this is the class that stores the posts of the pet lost or found
+
+/*
+* class to hold all the information the posts need
+* holds the name of the pet, the details of the post, the status of the pet (lost or found)
+* the last known location of the pet, the user who posted the post,
+* and the location of the picture of the pet in firebase storage.
+ */
+
 public class PetPost implements Parcelable {
 
     String name, details, status, lat, lng;

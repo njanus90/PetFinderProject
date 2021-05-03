@@ -6,9 +6,9 @@ import android.os.Parcelable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 /*
-* This is our user class that we will be using throught the app
-* it takes in the name of the user and the id of the user that is used in firebase
-* its also Parcelable so we can move it between fragments easily
+* This is the user class that is used throught the app
+* it takes in the name of the user and the id of the user as well as the users email that is used in firebase
+* its also Parcelable so it can be moved between fragments easily
  */
 public class User implements Parcelable {
     String name,id,email;

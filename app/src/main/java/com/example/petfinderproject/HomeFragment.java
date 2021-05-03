@@ -36,7 +36,13 @@ import com.google.firebase.firestore.Source;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//this Fragment does most the work. It is the screen you see when you get logged in
+/*
+ * This Fragment does most the work. It is the screen you see when you get logged in
+ * the user has a few options here. You can click to see all your posts, you can scroll
+ * through all the lost/found pets ordered by the closest in your vacinity, you can click on
+ * one of the posts to see it more indepth, you can click add a post button to add a post, and finally
+ * you can click the map button to see the locations of the posts.
+ */
 public class HomeFragment extends Fragment {
 
     //all the variables we need
@@ -82,13 +88,7 @@ public class HomeFragment extends Fragment {
         addLostOrFoundButton = view.findViewById(R.id.addLostOrFoundButton);
         mapButton = view.findViewById(R.id.mapButton);
         recyclerView = view.findViewById(R.id.recyclerView);
-        FirebaseUser currUser = mAuth.getCurrentUser();
-        if(currUser == null){
-            Log.d(TAG, "there is a user");
-        }
-        else {
-            Log.d(TAG, "No User");
-        }
+
         getData();
 
 

@@ -53,7 +53,10 @@ import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 /*
 * Fragment to add a post to firestore. It associates the post with
-* the current user that is logged on and allows the user some options
+* the current user that is logged on and allows the user some options.
+* the user can determine if their pet is lost or found, post a picure of their pet, provide
+* the pet name, provide last known location of the pet, and finally add any additional details about
+* the post.
  */
 
 public class AddPetFragment extends Fragment {

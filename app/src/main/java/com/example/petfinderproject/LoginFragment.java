@@ -21,6 +21,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/*
+* Fragment to login to the app. User is prompted to enter their email and password
+* once the login button is clicked firebase authentication is used to authenticate.
+* you can also click the change password button to be taken to the change password fragment
+ */
 public class LoginFragment extends Fragment {
     //variables we need
     private FirebaseAuth mAuth;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 /*
-  * this fragment is here to hold a recyclerview of all the curren't user's posts
+  * this fragment is here to hold a recyclerview of all the user's posts
   * so its like a place holder and doesn't do anything because it doesn't need to
  */
 

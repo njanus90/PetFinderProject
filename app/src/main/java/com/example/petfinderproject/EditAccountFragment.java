@@ -17,7 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-/**
+/*
  * This fragment handles the Edit Account button
  * It allows the user to change their name, password, and email.
  */
@@ -111,7 +111,7 @@ public class EditAccountFragment extends Fragment {
         });
         return view;
     }
-    // thsi is just a function we can call to handle the changing of the name and email
+    // this is just a function we can call to handle the changing of the name and email
     public void NameEmail(){
         //updates the user's name if there is something in the field
         if (!createName.getText().toString().isEmpty()) {
