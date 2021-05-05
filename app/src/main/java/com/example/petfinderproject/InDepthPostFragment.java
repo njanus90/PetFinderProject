@@ -122,7 +122,7 @@ public class InDepthPostFragment extends Fragment {
             }
         });
 
-        //this makse it so only if it is the user's post will the delete button appear.
+        //this makes it so only if it is the user's post will the delete button appear.
         if(mPost.user.email.equals(auth.getCurrentUser().getEmail())&& mPost.user.name.equals(auth.getCurrentUser().getDisplayName())) {
             buttonDelete.setVisibility(view.VISIBLE);
         } else {
@@ -133,6 +133,9 @@ public class InDepthPostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
+                //TODO: make this use the lat or lng so that there won't delete more than one post shoud just make it so uses the name of the pet + the email of the user.
+                //TODO: since they are stings they will concat
+                //TODO: so mPost.name.concat(mPost.user.id)
                 db.collection("users").document(mPost.user.id).collection("posts").document(mPost.name).delete();
                 getFragmentManager().popBackStack();
             }
