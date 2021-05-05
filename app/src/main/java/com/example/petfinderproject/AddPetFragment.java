@@ -1,18 +1,25 @@
 package com.example.petfinderproject;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -30,8 +37,15 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -52,14 +66,18 @@ import static android.app.Activity.RESULT_OK;
 import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 /*
-* Fragment to add a post to firestore. It associates the post with
-* the current user that is logged on and allows the user some options.
-* the user can determine if their pet is lost or found, post a picure of their pet, provide
-* the pet name, provide last known location of the pet, and finally add any additional details about
-* the post.
+ * Fragment to add a post to firestore. It associates the post with
+ * the current user that is logged on and allows the user some options.
+ * the user can determine if their pet is lost or found, post a picure of their pet, provide
+ * the pet name, provide last known location of the pet, and finally add any additional details about
+ * the post.
  */
 
-public class AddPetFragment extends Fragment {
+public class AddPetFragment extends Fragment implements LocationListener {
+
+    private FusedLocationProviderClient client;
+
+
 
     private static final String ARG_USER = "addPost";
     private static int RESULT_LOAD_IMAGE = 1;
@@ -81,6 +99,7 @@ public class AddPetFragment extends Fragment {
     public AddPetFragment() {
         // Required empty public constructor
     }
+
     //helps make a new AddPetFragment
     public static AddPetFragment newInstance(User user) {
         AddPetFragment fragment = new AddPetFragment();
@@ -96,6 +115,8 @@ public class AddPetFragment extends Fragment {
         if (getArguments() != null) {
             user = getArguments().getParcelable(ARG_USER);
         }
+
+
         //this is here incase the user doens't touch the switch and
         // because that would mean their pet is lost
         lost = "Lost";
@@ -109,6 +130,8 @@ public class AddPetFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_pet, container, false);
         mAuth = FirebaseAuth.getInstance();
         getActivity().setTitle(mAuth.getCurrentUser().getDisplayName());
+
+        client = LocationServices.getFusedLocationProviderClient(getActivity());
 
         //finds the needed view items
         statusSwitch = view.findViewById(R.id.statusSwitch);
@@ -154,6 +177,18 @@ public class AddPetFragment extends Fragment {
                 if (imageView3.getDrawable() == null) {
                     Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_LONG).show();
                 } else {
+                    Log.d("Demo", "About to get location");
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Log.d("Demo", "Getting Location");
+                        getCurrentLocation();
+
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},100);
+
+
+                    }
+
                     //this puts the posts into firestore.
                     HashMap<String, Object> fourm = new HashMap<>();
                     fourm.put("PetName", addPetName.getText().toString());
@@ -178,6 +213,66 @@ public class AddPetFragment extends Fragment {
         });
 
         return view;
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 100 && (grantResults.length > 0) && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)){
+
+            getCurrentLocation();
+        } else {
+
+            Toast.makeText(getActivity(),"Permission Denied", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getCurrentLocation() {
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            client.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+
+                        Log.d("Demo", "Location not Null");
+                        //Set lat and long
+                        Log.d("Demo", "Lat: " + String.valueOf(location.getLatitude()));
+                        Log.d("Demo", "Long: " + String.valueOf(location.getLongitude()));
+
+                        //valueOf(location.getLatitude())
+                        //valueOf(location.getLongitude())
+
+                    } else {
+                        LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(10000).setFastestInterval(10000).setNumUpdates(1);
+
+                        LocationCallback locationCallback = new LocationCallback() {
+                            @Override
+                            public void onLocationResult(@NonNull LocationResult locationResult) {
+
+                                Log.d("Demo", "Requesting Location");
+                                Location location1 = locationResult.getLastLocation();
+
+                                Log.d("Demo", "Lat: " + String.valueOf(location.getLatitude()));
+                                Log.d("Demo", "Long: " + String.valueOf(location.getLongitude()));
+                                //Set lat and long
+                                //valueOf(location.getLatitude())
+                                //valueOf(location.getLongitude())
+
+                            }
+                        };
+
+                    }
+                }
+            });
+
+        }
 
     }
 
@@ -269,6 +364,11 @@ public class AddPetFragment extends Fragment {
                                 }
                             });
         }
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
     }
 }
 //    public static String getPath( Context context, Uri uri ) {
