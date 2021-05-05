@@ -93,7 +93,7 @@ public class MyPostsFragment extends Fragment {
                         HashMap u = (HashMap) (doc.get("user"));
                         User use = new User(u.get("name").toString(), u.get("id").toString(), u.get("email").toString());
                         //adds a new petPost to the posts array
-                        posts.add(new PetPost(doc.get("lost").toString(), doc.get("PetName").toString(), use, doc.get("details").toString(), doc.get("image").toString(), null, null));
+                        posts.add(new PetPost(doc.get("lost").toString(), doc.get("PetName").toString(), use, doc.get("details").toString(), doc.get("image").toString(), doc.get("lat").toString(), doc.get("lng").toString()));
                     }
                     adapter.notifyDataSetChanged();
                     if (posts.isEmpty()) {

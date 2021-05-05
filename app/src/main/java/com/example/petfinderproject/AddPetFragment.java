@@ -95,6 +95,8 @@ public class AddPetFragment extends Fragment implements LocationListener {
     FirebaseStorage storage;
     StorageReference storageReference;
     Uri filePath;
+    double lat;
+    double lng;
 
     public AddPetFragment() {
         // Required empty public constructor
@@ -193,16 +195,13 @@ public class AddPetFragment extends Fragment implements LocationListener {
                     HashMap<String, Object> fourm = new HashMap<>();
                     fourm.put("PetName", addPetName.getText().toString());
                     fourm.put("lost", lost);
-                    //these are things we will need later
-                    //fourm.put("lat",)
-                    //fourm.put("lng",)
-                    //fourm.put("location", )
+                    fourm.put("lat",lat);
+                    fourm.put("lng",lng);
                     fourm.put("image", ref.toString());
                     fourm.put("user", user);
                     fourm.put("details", addDetails.getText().toString());
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    //TODO: change the tile to the lat or lng so that there is no chance it will be the same as another.
-                    db.collection("users").document(user.id).collection("posts").document(addPetName.getText().toString()).set(fourm);
+                    db.collection("users").document(user.id).collection("posts").document(addPetName.getText().toString().concat(mAuth.getCurrentUser().getUid())).set(fourm);
 
                     //moves to the home fragment
                     getFragmentManager().beginTransaction()
@@ -241,7 +240,8 @@ public class AddPetFragment extends Fragment implements LocationListener {
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
                     if (location != null) {
-
+                        lat = location.getLatitude();
+                        lng = location.getLongitude();
                         Log.d("Demo", "Location not Null");
                         //Set lat and long
                         Log.d("Demo", "Lat: " + String.valueOf(location.getLatitude()));

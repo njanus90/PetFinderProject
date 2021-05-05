@@ -169,10 +169,10 @@ public class HomeFragment extends Fragment {
                                                 HashMap UserName = (HashMap) (task.getResult().getDocuments().get(i).get("user"));
                                                 String details = task.getResult().getDocuments().get(i).get("details").toString();
                                                 String image = task.getResult().getDocuments().get(i).get("image").toString();
-                                                //String lat = task.getResult().getDocuments().get(i).get("lat").toString();
-                                                //String lng = task.getResult().getDocuments().get(i).get("lng").toString();
+                                                String lat = task.getResult().getDocuments().get(i).get("lat").toString();
+                                                String lng = task.getResult().getDocuments().get(i).get("lng").toString();
                                                 User u = new User(UserName.get("name").toString(), UserName.get("id").toString(), UserName.get("email").toString());
-                                                posts.add(new PetPost(lost, petName, u, details, image, null, null));
+                                                posts.add(new PetPost(lost, petName, u, details, image, lat, lng));
                                             }
                                         }catch (Exception e) {
                                             //does nothing cause we don't want to print the error.
