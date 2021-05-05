@@ -134,10 +134,7 @@ public class InDepthPostFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("users").document(mPost.user.id).collection("posts").document(mPost.name).delete();
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getUid(), auth.getCurrentUser().getEmail())), "HOME")
-                        .addToBackStack(null)
-                        .commit();
+                getFragmentManager().popBackStack();
             }
         });
         return view;
