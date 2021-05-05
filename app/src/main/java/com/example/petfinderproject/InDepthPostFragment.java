@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -38,7 +41,9 @@ public class InDepthPostFragment extends Fragment {
     Button postMapButton;
     StorageReference ref;
     FirebaseStorage storage;
+    Button buttonDelete;
     private PetPost mPost;
+    FirebaseAuth auth;
 
     public InDepthPostFragment() { //required empty constructor
         }
@@ -73,6 +78,8 @@ public class InDepthPostFragment extends Fragment {
         buttonUser = view.findViewById(R.id.buttonUser);
         imageView4 = view.findViewById(R.id.imageView4);
         postMapButton = view.findViewById(R.id.postMapButton);
+        buttonDelete = view.findViewById(R.id.buttonDelete);
+        auth = FirebaseAuth.getInstance();
 
         //sets all the text views
         buttonUser.setText(mPost.user.name);
@@ -110,6 +117,25 @@ public class InDepthPostFragment extends Fragment {
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentLayout, new MapsFragment(),"maps")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        //this makse it so only if it is the user's post will the delete button appear.
+        if(mPost.user.email.equals(auth.getCurrentUser().getEmail())&& mPost.user.name.equals(auth.getCurrentUser().getDisplayName())) {
+            buttonDelete.setVisibility(view.VISIBLE);
+        } else {
+            buttonDelete.setVisibility(view.INVISIBLE);
+        }
+        //this deletes the post and moves to the home activity.
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(mPost.user.id).collection("posts").document(mPost.name).delete();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, HomeFragment.newInstance(new User(auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getUid(), auth.getCurrentUser().getEmail())), "HOME")
                         .addToBackStack(null)
                         .commit();
             }

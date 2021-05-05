@@ -166,7 +166,8 @@ public class AddPetFragment extends Fragment {
                     fourm.put("user", user);
                     fourm.put("details", addDetails.getText().toString());
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("users").document(user.id).collection("posts").add(fourm);
+                    //TODO: change the tile to the lat or lng so that there is no chance it will be the same as another.
+                    db.collection("users").document(user.id).collection("posts").document(addPetName.getText().toString()).set(fourm);
 
                     //moves to the home fragment
                     getFragmentManager().beginTransaction()
