@@ -25,16 +25,12 @@
         android:id="@+id/editAccountButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:layout_marginBottom="316dp"
+        android:layout_marginTop="8dp"
         android:text="Edit Account"
         app:icon="@android:drawable/ic_menu_edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/buttonHome"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonHome"
-        app:layout_constraintTop_toBottomOf="@+id/buttonHome"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonPosts"
+        app:layout_constraintStart_toStartOf="@+id/buttonPosts"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPosts" />
 
     <TextView
         android:id="@+id/textView25"
@@ -50,8 +46,8 @@
 
     <Button
         android:id="@+id/buttonPosts"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Click to see Posts"
         app:layout_constraintEnd_toEndOf="@+id/textView21"
@@ -63,9 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="User Emal:"
+        android:text="User Email:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintEnd_toEndOf="@+id/textView25"
         app:layout_constraintStart_toStartOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
@@ -93,7 +88,7 @@
         android:id="@+id/textView39"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="Contact Info:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
@@ -104,12 +99,12 @@
 
     <Button
         android:id="@+id/buttonHome"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
+        android:layout_marginBottom="16dp"
         android:text="Go to Home Screen"
-        app:layout_constraintEnd_toEndOf="@+id/buttonPosts"
-        app:layout_constraintStart_toStartOf="@+id/buttonPosts"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPosts" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editAccountButton"
+        app:layout_constraintStart_toStartOf="@+id/editAccountButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

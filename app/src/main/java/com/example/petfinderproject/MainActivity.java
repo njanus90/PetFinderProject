@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         mAuth = FirebaseAuth.getInstance();
+        setTitle(null);
 
         containerView = findViewById(R.id.fragmentLayout);
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 //gets rid of all stuff on backstack
 
                 mAuth.signOut();
-                setTitle("PetFinder");
+                setTitle(null);
                 //sets the items in the tool bar invisable
                 MainActivity.prof.setVisible(false);
                 MainActivity.log.setVisible(false);
