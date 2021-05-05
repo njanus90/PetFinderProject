@@ -150,12 +150,9 @@
         android:id="@+id/buttonDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
-        android:text="DeletePost"
+        android:text="Delete Post"
         app:layout_constraintBottom_toBottomOf="@+id/textView21"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postPetDetails"
-        app:layout_constraintVertical_bias="0.926" />
+        app:layout_constraintEnd_toEndOf="@+id/postPetDetails"
+        app:layout_constraintStart_toStartOf="@+id/postPetDetails"
+        app:layout_constraintTop_toBottomOf="@+id/postPetDetails" />
 </androidx.constraintlayout.widget.ConstraintLayout>
