@@ -136,6 +136,9 @@ public class InDepthPostFragment extends Fragment {
             public void onClick(View v) {
                 //deletes the post from firestore
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
+                //could change the document to mPost.lat.concat(mPost.lng) cause the lat and lng will never be the same
+                //howver the emulator prevents us from doing that because the position of the emulator
+                //never changes
                 db.collection("users").document(mPost.user.id).collection("posts").document(mPost.name.concat(auth.getCurrentUser().getUid())).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -260,6 +260,9 @@ public class AddPetFragment extends Fragment implements LocationListener {
         fourm.put("user", user);
         fourm.put("details", addDetails.getText().toString());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //could change the document to mPost.lat.concat(mPost.lng) cause the lat and lng will never be the same
+        //howver the emulator prevents us from doing that because the position of the emulator
+        //never changes
         db.collection("users").document(user.id).collection("posts").document(addPetName.getText().toString().concat(mAuth.getCurrentUser().getUid())).set(fourm);
 
         //moves to the home fragment
