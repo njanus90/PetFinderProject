@@ -181,7 +181,9 @@ public class EditAccountFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error == null) {
+                    //loops through all the users posts
                     for (QueryDocumentSnapshot doc : value) {
+                        //updates the user stored in the post.
                         db.collection("users").document(mAuth.getCurrentUser().getUid())
                                 .collection("posts").document(doc.getId())
                                 .update("user",new User(mAuth.getCurrentUser().getDisplayName()
