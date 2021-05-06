@@ -128,6 +128,7 @@ public class InDepthPostFragment extends Fragment {
         } else {
             buttonDelete.setVisibility(view.INVISIBLE);
         }
+
         //this deletes the post and pops back a fragment if the delete button is clicked.
         //displays a toast once both the post and picture are deleted from firebase
         buttonDelete.setOnClickListener(new View.OnClickListener() {

@@ -58,6 +58,7 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
         // Required empty public constructor
     }
+
     //the following two methods take in a user from another fragment
     public static HomeFragment newInstance(User user) {
         HomeFragment fragment = new HomeFragment();
@@ -87,10 +88,7 @@ public class HomeFragment extends Fragment {
         addLostOrFoundButton = view.findViewById(R.id.addLostOrFoundButton);
         mapButton = view.findViewById(R.id.mapButton);
         recyclerView = view.findViewById(R.id.recyclerView);
-
         getData();
-
-
         //sets the recyclerview to the adapter we made for it
         recyclerView.setHasFixedSize(true);
         //gives the recyclerView a layoutManager

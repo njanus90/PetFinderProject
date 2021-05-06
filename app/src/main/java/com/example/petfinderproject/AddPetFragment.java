@@ -155,9 +155,7 @@ public class AddPetFragment extends Fragment implements LocationListener {
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
-
         });
-
 
         //this determines the status of the switch
         //if the switch is on the pet is Found
@@ -172,6 +170,7 @@ public class AddPetFragment extends Fragment implements LocationListener {
                 }
             }
         });
+
         addSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,8 +191,6 @@ public class AddPetFragment extends Fragment implements LocationListener {
                     } else {
                         Log.d("demo", "in requst permission: ");
                         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},100);
-
-
                     }
                 }
             }
@@ -204,39 +201,29 @@ public class AddPetFragment extends Fragment implements LocationListener {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         if (requestCode == 100 && (grantResults.length > 0) && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)){
-
             getCurrentLocation();
-
         } else {
-
             Toast.makeText(getActivity(),"Permission Denied", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @SuppressLint("MissingPermission")
     private void getCurrentLocation() {
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             client.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
                     if (location != null) {
+                        //Set lat and long
                         lat = location.getLatitude();
                         lng = location.getLongitude();
                         put();
                         Log.d("Demo", "Location not Null");
-                        //Set lat and long
                         Log.d("Demo", "Lat: " + String.valueOf(lat));
                         Log.d("Demo", "Long: " + String.valueOf(lng));
-
-                        //valueOf(location.getLatitude())
-                        //valueOf(location.getLongitude())
-
                     } else {
                         LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(10000).setFastestInterval(10000).setNumUpdates(1);
 
@@ -246,15 +233,12 @@ public class AddPetFragment extends Fragment implements LocationListener {
 
                                 Log.d("Demo", "Requesting Location");
                                 Location location1 = locationResult.getLastLocation();
+                                //Set lat and long
                                 lat = location.getLatitude();
                                 lng = location.getLongitude();
                                 put();
                                 Log.d("Demo", "Lat: " + String.valueOf(lat));
                                 Log.d("Demo", "Long: " + String.valueOf(lng));
-
-                                //Set lat and long
-                                //valueOf(location.getLatitude())
-                                //valueOf(location.getLongitude())
                             }
                         };
 
@@ -364,19 +348,3 @@ public class AddPetFragment extends Fragment implements LocationListener {
 
     }
 }
-//    public static String getPath( Context context, Uri uri ) {
-//        String result = null;
-//        String[] proj = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
-//        if (cursor != null) {
-//            if (cursor.moveToFirst()) {
-//                int column_index = cursor.getColumnIndexOrThrow(proj[0]);
-//                result = cursor.getString(column_index);
-//            }
-//            cursor.close();
-//        }
-//        if (result == null) {
-//            result = "Not found";
-//        }
-//        return result;
-//    }

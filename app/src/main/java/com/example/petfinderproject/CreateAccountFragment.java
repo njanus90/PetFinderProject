@@ -106,9 +106,9 @@ public class CreateAccountFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
+
     //this inputs the new user into firestore
     public void createUser(String name, String id,String email){
         FirebaseFirestore db = FirebaseFirestore.getInstance();

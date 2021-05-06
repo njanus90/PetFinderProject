@@ -30,9 +30,6 @@ public class MyProfileFragment extends Fragment {
     Button buttonPosts;
     Button buttonHome;
     private FirebaseAuth mAuth;
-
-
-
     Button editAccountButton;
 
     public MyProfileFragment() {
@@ -78,6 +75,7 @@ public class MyProfileFragment extends Fragment {
                         .commit();
             }
         });
+
         textViewName.setText(user.name);
         if(user.email.equals(mAuth.getCurrentUser().getEmail())&& user.name.equals(mAuth.getCurrentUser().getDisplayName())){
             //if the editAccount button is clicked moves to the Edit account fragment
@@ -94,6 +92,7 @@ public class MyProfileFragment extends Fragment {
         } else {
             editAccountButton.setVisibility(view.INVISIBLE);
         }
+
         textViewEamail.setText(user.email);
 
         buttonPosts.setOnClickListener(new View.OnClickListener() {

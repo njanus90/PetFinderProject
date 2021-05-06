@@ -34,13 +34,13 @@ public class RecyclerViewAdapterHome extends RecyclerView.Adapter<RecyclerViewAd
         this.posts = posts;
         this.A = A;
     }
+
     @NonNull
     @Override
     public RecyclerViewAdapterHome.UserViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflates the layout and creates a viewholder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_post,parent,false);
         RecyclerViewAdapterHome.UserViewholder userViewholder = new RecyclerViewAdapterHome.UserViewholder(view);
-
         return userViewholder;
     }
 

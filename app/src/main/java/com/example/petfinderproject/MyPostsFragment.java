@@ -58,7 +58,6 @@ public class MyPostsFragment extends Fragment {
         if (getArguments() != null) {
             user = getArguments().getString(ARG_USER);
         }
-
     }
 
     @Override
@@ -104,9 +103,6 @@ public class MyPostsFragment extends Fragment {
                 }
             }
         });
-
-
-
         return view;
     }
 }
