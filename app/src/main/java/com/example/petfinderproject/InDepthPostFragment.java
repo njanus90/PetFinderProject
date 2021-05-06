@@ -128,13 +128,26 @@ public class InDepthPostFragment extends Fragment {
         } else {
             buttonDelete.setVisibility(view.INVISIBLE);
         }
-        //this deletes the post and moves to the home activity.
+        //this deletes the post and pops back a fragment if the delete button is clicked.
+        //displays a toast once both the post and picture are deleted from firebase
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //deletes the post from firestore
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(mPost.user.id).collection("posts").document(mPost.name.concat(auth.getCurrentUser().getUid())).delete();
-                getFragmentManager().popBackStack();
+                db.collection("users").document(mPost.user.id).collection("posts").document(mPost.name.concat(auth.getCurrentUser().getUid())).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //deletes the photo from storage
+                        ref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(),"PostDeleted", Toast.LENGTH_SHORT).show();
+                                getFragmentManager().popBackStack();
+                            }
+                        });
+                    }
+                });
             }
         });
         return view;
