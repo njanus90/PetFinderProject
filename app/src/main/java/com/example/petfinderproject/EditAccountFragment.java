@@ -29,6 +29,9 @@ import java.util.HashMap;
 /*
  * This fragment handles the Edit Account button
  * It allows the user to change their name, password, and email.
+ * also updates the posts to have the newly updated user.
+ * It also gets the user's current location in the form of lat and lng
+ * If you are using an emulator the default location is google hq
  */
 public class EditAccountFragment extends Fragment {
 
@@ -165,12 +168,11 @@ public class EditAccountFragment extends Fragment {
                                 .addToBackStack(null)
                                 .commit();
                     }
-
                 }
             });
         }
     }
-    //updates all the posts to have the new user fields if the user updates their account
+    //updates all the users posts to have the new user fields if the user updates their account
     public void updatePosts(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference postOrder = db.collection("users")
@@ -180,7 +182,6 @@ public class EditAccountFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error == null) {
                     for (QueryDocumentSnapshot doc : value) {
-
                         db.collection("users").document(mAuth.getCurrentUser().getUid())
                                 .collection("posts").document(doc.getId())
                                 .update("user",new User(mAuth.getCurrentUser().getDisplayName()
