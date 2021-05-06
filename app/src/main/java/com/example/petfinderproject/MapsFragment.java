@@ -63,7 +63,6 @@ public class MapsFragment extends Fragment {
             //googleMap.addMarker(new MarkerOptions().position(UNCC).title("UNCC"));
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(UNCC, 15), 2000, null);
 
-
             mAuth = FirebaseAuth.getInstance();
             db = FirebaseFirestore.getInstance();
             mMap = googleMap;
@@ -110,20 +109,9 @@ public class MapsFragment extends Fragment {
                                     .commit();
                         }
                     }
-
-                    marker.getPosition();
-
                     return false;
                 }
             });
-
-            /*db.collection("users").document(mAuth.getUid()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    LatLng location = new LatLng(Double.valueOf(task.getResult().getDocuments().get(0).get("lat").toString()), Double.valueOf(task.getResult().getDocuments().get(0).get("lng").toString()));
-                    mMap.addMarker(new MarkerOptions().position(location).title("Marker"));
-                }
-            });*/
         }
     };
 
