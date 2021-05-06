@@ -17,10 +17,7 @@ import android.widget.Button;
 public class PostFragment extends Fragment {
 
     private static final String ARG_USER = "user";
-
     private String user;
-
-
 
     public PostFragment() {
         // Required empty public constructor

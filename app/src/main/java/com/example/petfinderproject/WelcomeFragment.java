@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class WelcomeFragment extends Fragment {
 
     FirebaseAuth mAuth;
-
     //Declares the buttons to be used
     Button homeLoginButton, homeCreateAccountButton;
 
@@ -63,8 +62,6 @@ public class WelcomeFragment extends Fragment {
                         .commit();
             }
         });
-
-
         return view;
     }
 }

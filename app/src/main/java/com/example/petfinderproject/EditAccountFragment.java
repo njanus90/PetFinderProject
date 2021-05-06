@@ -75,8 +75,8 @@ public class EditAccountFragment extends Fragment {
         confirmPassword = view.findViewById(R.id.confirmPassword);
         submitButtonCreate = view.findViewById(R.id.submitButtonCreate);
         nexFrag = true;
-
         mAuth = FirebaseAuth.getInstance();
+
         submitButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,9 +123,9 @@ public class EditAccountFragment extends Fragment {
         });
         return view;
     }
+
     // this is just a function we can call to handle the changing of the name and email
     public void NameEmail(){
-
         //updates the user's name if there is something in the field
         if (!createName.getText().toString().isEmpty()) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
@@ -151,7 +151,8 @@ public class EditAccountFragment extends Fragment {
                 }
             });
         }
-        //updstes the user's email if the field is full
+
+        //updates the user's email if the field is full
         if (!createEmail.getText().toString().isEmpty()) {
             mAuth.getCurrentUser().updateEmail(createEmail.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -172,6 +173,7 @@ public class EditAccountFragment extends Fragment {
             });
         }
     }
+
     //updates all the users posts to have the new user fields if the user updates their account
     public void updatePosts(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();

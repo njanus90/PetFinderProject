@@ -56,18 +56,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentLayout, new WelcomeFragment(), "welcome-screen")
                 .commit();
-
-
-        //TODO: Potential consistent login implementation, not tested
-        /*if(mAuth.getCurrentUser() == null){
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentView, new LoginFragment())
-                    .commit();
-        } else {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentView, new MainFragment())
-                    .commit();
-        }*/
     }
 
     //Handles the creation of the toolbar

@@ -34,11 +34,10 @@ public class ChangePasswordFragment extends Fragment {
     Button submitButtonChange;
     private FirebaseAuth mAuth;
 
-
-
     public ChangePasswordFragment() {
         // Required empty public constructor
     }
+
     //makes the fragment
     public static ChangePasswordFragment newInstance() {
         ChangePasswordFragment fragment = new ChangePasswordFragment();
@@ -76,8 +75,6 @@ public class ChangePasswordFragment extends Fragment {
                         .commit();
             }
         });
-
-
        return view;
     }
 }

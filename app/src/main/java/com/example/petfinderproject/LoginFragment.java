@@ -33,8 +33,6 @@ public class LoginFragment extends Fragment {
     EditText loginEmail, loginPassword;
     Toolbar myToolbar;
 
-
-
     public LoginFragment() {// Required empty public constructor
          }
 
@@ -46,10 +44,7 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
