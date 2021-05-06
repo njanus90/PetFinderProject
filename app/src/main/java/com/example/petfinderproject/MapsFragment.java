@@ -78,8 +78,10 @@ public class MapsFragment extends Fragment {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 for(int i = 0; i < task.getResult().getDocuments().size(); i++){
                                     LatLng location = new LatLng(Double.valueOf(task.getResult().getDocuments().get(i).get("lat").toString()), Double.valueOf(task.getResult().getDocuments().get(i).get("lng").toString()));
+                                    //adds a marker to the map
                                     mMap.addMarker(new MarkerOptions().position(location).title(task.getResult().getDocuments().get(i).get("PetName").toString()));
 
+                                    //gets a list of posts
                                     String lost = task.getResult().getDocuments().get(i).get("lost").toString();
                                     String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
                                     HashMap UserName = (HashMap) (task.getResult().getDocuments().get(i).get("user"));
@@ -95,10 +97,11 @@ public class MapsFragment extends Fragment {
                     }
                 }
             });
-
+            //when you click on the map marker it sends you to the post
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
+                    //seraches through the lists of posts so when we click on a marker it sends us to the right post.
                     for(int i =0; i < posts.size(); i++){
                         if(marker.getPosition().latitude == Double.valueOf(posts.get(i).lat) && marker.getPosition().longitude == Double.valueOf(posts.get(i).lng)){
                             getFragmentManager().beginTransaction()
