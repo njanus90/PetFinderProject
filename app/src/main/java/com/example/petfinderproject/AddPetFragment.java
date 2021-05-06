@@ -175,6 +175,7 @@ public class AddPetFragment extends Fragment implements LocationListener {
         addSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //checks if the user has an image selected
                 if (imageView3.getDrawable() == null) {
                     Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_LONG).show();
@@ -186,32 +187,14 @@ public class AddPetFragment extends Fragment implements LocationListener {
                         getCurrentLocation();
 
                     } else {
+                        Log.d("demo", "in requst permission: ");
                         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},100);
 
 
                     }
-
-                    //this puts the posts into firestore.
-                    HashMap<String, Object> fourm = new HashMap<>();
-                    fourm.put("PetName", addPetName.getText().toString());
-                    fourm.put("lost", lost);
-                    fourm.put("lat",lat);
-                    fourm.put("lng",lng);
-                    fourm.put("image", ref.toString());
-                    fourm.put("user", user);
-                    fourm.put("details", addDetails.getText().toString());
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("users").document(user.id).collection("posts").document(addPetName.getText().toString().concat(mAuth.getCurrentUser().getUid())).set(fourm);
-
-                    //moves to the home fragment
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "MyPosts")
-                            .addToBackStack(null)
-                            .commit();
                 }
             }
         });
-
         return view;
 
     }
@@ -223,6 +206,7 @@ public class AddPetFragment extends Fragment implements LocationListener {
         if (requestCode == 100 && (grantResults.length > 0) && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)){
 
             getCurrentLocation();
+
         } else {
 
             Toast.makeText(getActivity(),"Permission Denied", Toast.LENGTH_SHORT).show();
@@ -242,10 +226,11 @@ public class AddPetFragment extends Fragment implements LocationListener {
                     if (location != null) {
                         lat = location.getLatitude();
                         lng = location.getLongitude();
+                        put();
                         Log.d("Demo", "Location not Null");
                         //Set lat and long
-                        Log.d("Demo", "Lat: " + String.valueOf(location.getLatitude()));
-                        Log.d("Demo", "Long: " + String.valueOf(location.getLongitude()));
+                        Log.d("Demo", "Lat: " + String.valueOf(lat));
+                        Log.d("Demo", "Long: " + String.valueOf(lng));
 
                         //valueOf(location.getLatitude())
                         //valueOf(location.getLongitude())
@@ -259,22 +244,43 @@ public class AddPetFragment extends Fragment implements LocationListener {
 
                                 Log.d("Demo", "Requesting Location");
                                 Location location1 = locationResult.getLastLocation();
+                                lat = location.getLatitude();
+                                lng = location.getLongitude();
+                                put();
+                                Log.d("Demo", "Lat: " + String.valueOf(lat));
+                                Log.d("Demo", "Long: " + String.valueOf(lng));
 
-                                Log.d("Demo", "Lat: " + String.valueOf(location.getLatitude()));
-                                Log.d("Demo", "Long: " + String.valueOf(location.getLongitude()));
                                 //Set lat and long
                                 //valueOf(location.getLatitude())
                                 //valueOf(location.getLongitude())
-
                             }
                         };
 
                     }
                 }
             });
-
         }
+    }
+    //method to put the data into firestore
+    public void put(){
+        Log.d("demo", String.valueOf(lat));
+        //this puts the posts into firestore.
+        HashMap<String, Object> fourm = new HashMap<>();
+        fourm.put("PetName", addPetName.getText().toString());
+        fourm.put("lost", lost);
+        fourm.put("lat",lat);
+        fourm.put("lng",lng);
+        fourm.put("image", ref.toString());
+        fourm.put("user", user);
+        fourm.put("details", addDetails.getText().toString());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(user.id).collection("posts").document(addPetName.getText().toString().concat(mAuth.getCurrentUser().getUid())).set(fourm);
 
+        //moves to the home fragment
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragmentLayout, HomeFragment.newInstance(user), "MyPosts")
+                .addToBackStack(null)
+                .commit();
     }
 
     //this handles the image. it basically jsut gets the image uri from when we get back from
@@ -292,9 +298,7 @@ public class AddPetFragment extends Fragment implements LocationListener {
                 Bitmap bitmap = MediaStore
                         .Images
                         .Media
-                        .getBitmap(
-                                context.getContentResolver(),
-                                filePath);
+                        .getBitmap(context.getContentResolver(),filePath);
                 imageView3.setImageBitmap(bitmap);
                 uploadImage();
             } catch (IOException e) {
@@ -320,12 +324,9 @@ public class AddPetFragment extends Fragment implements LocationListener {
             // adding listeners on upload
             // or failure of image
             ref.putFile(filePath)
-                    .addOnSuccessListener(
-                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
-                                public void onSuccess(
-                                        UploadTask.TaskSnapshot taskSnapshot) {
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                                     // Image uploaded successfully
                                     // Dismiss dialog
@@ -339,29 +340,18 @@ public class AddPetFragment extends Fragment implements LocationListener {
 
                             // Error, Image not uploaded
                             progressDialog.dismiss();
-                            Toast
-                                    .makeText(getContext(),
-                                            "Failed " + e.getMessage(),
-                                            Toast.LENGTH_SHORT)
-                                    .show();
+                            Toast.makeText(getContext(),"Failed " + e.getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .addOnProgressListener(
-                            new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
 
                                 // Progress Listener for loading
                                 // percentage on the dialog box
                                 // again not nessesary but it looks nice and didn't take long to implement
                                 @Override
-                                public void onProgress(
-                                        UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress
-                                            = (100.0
-                                            * taskSnapshot.getBytesTransferred()
-                                            / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage(
-                                            "Uploaded "
-                                                    + (int) progress + "%");
+                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                    double progress= (100.0* taskSnapshot.getBytesTransferred()/ taskSnapshot.getTotalByteCount());
+                                    progressDialog.setMessage("Uploaded "+ (int) progress + "%");
                                 }
                             });
         }
