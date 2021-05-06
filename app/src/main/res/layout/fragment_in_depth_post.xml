@@ -151,7 +151,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete Post"
-        app:layout_constraintBottom_toBottomOf="@+id/textView21"
         app:layout_constraintEnd_toEndOf="@+id/postPetDetails"
         app:layout_constraintStart_toStartOf="@+id/postPetDetails"
         app:layout_constraintTop_toBottomOf="@+id/postPetDetails" />
