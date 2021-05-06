@@ -2,6 +2,7 @@ package com.example.petfinderproject;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -16,6 +17,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
 
 /*
  * This fragment handles the Edit Account button
@@ -113,6 +122,7 @@ public class EditAccountFragment extends Fragment {
     }
     // this is just a function we can call to handle the changing of the name and email
     public void NameEmail(){
+
         //updates the user's name if there is something in the field
         if (!createName.getText().toString().isEmpty()) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
@@ -124,11 +134,12 @@ public class EditAccountFragment extends Fragment {
                     //sets the title of the activity after the display name is changed
                     getActivity().setTitle(createName.getText().toString());
                     Toast.makeText(getContext(), "Name Changed", Toast.LENGTH_SHORT).show();
+                    updatePosts();
                     // this is to make sure only one fragment is created if we are changing the
                     // more than one account field
                     if(nexFrag == true){
                         nexFrag = false;
-                        //goes back to the login fragment by just creating a new user the fields filled with mAuth if atleast one thing was changed
+                        //goes back to the profile fragment
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail())), "Home-screen")
                                 .addToBackStack(null)
@@ -143,11 +154,12 @@ public class EditAccountFragment extends Fragment {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Toast.makeText(getContext(), "Email Changed", Toast.LENGTH_SHORT).show();
+                    updatePosts();
                     // this is to make sure only one fragment is created if we are changing the
                     // more than one account field
                     if(nexFrag == true){
                         nexFrag = false;
-                        //goes back to the login fragment by just creating a new user the fields filled with mAuth if atleast one thing was changed
+                        //goes back to the profile fragment
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail())), "Home-screen")
                                 .addToBackStack(null)
@@ -157,5 +169,25 @@ public class EditAccountFragment extends Fragment {
                 }
             });
         }
+    }
+    //updates all the posts to have the new user fields if the user updates their account
+    public void updatePosts(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference postOrder = db.collection("users")
+                .document(mAuth.getCurrentUser().getUid()).collection("posts");
+        postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error == null) {
+                    for (QueryDocumentSnapshot doc : value) {
+
+                        db.collection("users").document(mAuth.getCurrentUser().getUid())
+                                .collection("posts").document(doc.getId())
+                                .update("user",new User(mAuth.getCurrentUser().getDisplayName()
+                                        ,mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail()));
+                       }
+                }
+            }
+        });
     }
 }
