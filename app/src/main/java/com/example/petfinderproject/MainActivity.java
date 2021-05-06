@@ -77,9 +77,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navProfile:
                 // User chose the "Settings" item, show the app settings UI...
-
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail())), "my-profile-screen")
+                        .replace(R.id.fragmentLayout, MyProfileFragment.newInstance(new User(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail())), "my-profile-screen")
                         .addToBackStack(null)
                         .commit();
                 return true;

@@ -79,7 +79,6 @@ public class MyPostsFragment extends Fragment {
         //makes an RecuclerViewAdapter which we created and sets it to the recyclerView
         adapter = new RecyclerViewAdapterHome(posts, getActivity());
         recyclerViewMYPosts.setAdapter(adapter);
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference postOrder = db.collection("users").document(user).collection("posts");
         postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {

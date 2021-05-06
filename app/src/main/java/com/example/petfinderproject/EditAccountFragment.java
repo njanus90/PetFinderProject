@@ -179,6 +179,11 @@ public class EditAccountFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference postOrder = db.collection("users")
                 .document(mAuth.getCurrentUser().getUid()).collection("posts");
+        //updates the name of the user in the firestore outside the posts.
+        db.collection("users")
+                .document(mAuth.getCurrentUser().getUid()).update("email",mAuth.getCurrentUser().getEmail());
+        db.collection("users")
+                .document(mAuth.getCurrentUser().getUid()).update("name",mAuth.getCurrentUser().getDisplayName());
         postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
