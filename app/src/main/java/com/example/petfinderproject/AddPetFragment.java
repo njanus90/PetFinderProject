@@ -178,8 +178,11 @@ public class AddPetFragment extends Fragment implements LocationListener {
 
                 //checks if the user has an image selected
                 if (imageView3.getDrawable() == null) {
-                    Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_LONG).show();
-                } else {
+                    Toast.makeText(getContext(), "Please Choose a Picture", Toast.LENGTH_SHORT).show();
+                    //makes the user enter a pet name
+                } else if(addPetName.getText().toString().equals("")){
+                    Toast.makeText(getContext(), "Enter a pet name. If you don't know it type unknown.", Toast.LENGTH_LONG).show();
+                }else {
                     Log.d("Demo", "About to get location");
                     if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                             ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -196,7 +199,6 @@ public class AddPetFragment extends Fragment implements LocationListener {
             }
         });
         return view;
-
     }
 
     @Override
