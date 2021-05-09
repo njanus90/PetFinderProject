@@ -71,6 +71,9 @@ public class MapsFragment extends Fragment {
             postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if(error!=null){
+                        Log.d("Demo", "Error: " + error.getMessage());
+                    }
                     for (QueryDocumentSnapshot doc : value) {
                         db.collection("users").document(doc.getId()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
