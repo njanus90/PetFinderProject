@@ -73,29 +73,30 @@ public class MapsFragment extends Fragment {
                 public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                     if(error!=null){
                         Log.d("Demo", "Error: " + error.getMessage());
-                    }
-                    for (QueryDocumentSnapshot doc : value) {
-                        db.collection("users").document(doc.getId()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                for(int i = 0; i < task.getResult().getDocuments().size(); i++){
-                                    LatLng location = new LatLng(Double.valueOf(task.getResult().getDocuments().get(i).get("lat").toString()), Double.valueOf(task.getResult().getDocuments().get(i).get("lng").toString()));
-                                    //adds a marker to the map
-                                    mMap.addMarker(new MarkerOptions().position(location).title(task.getResult().getDocuments().get(i).get("PetName").toString()));
+                    } else {
+                        for (QueryDocumentSnapshot doc : value) {
+                            db.collection("users").document(doc.getId()).collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    for(int i = 0; i < task.getResult().getDocuments().size(); i++){
+                                        LatLng location = new LatLng(Double.valueOf(task.getResult().getDocuments().get(i).get("lat").toString()), Double.valueOf(task.getResult().getDocuments().get(i).get("lng").toString()));
+                                        //adds a marker to the map
+                                        mMap.addMarker(new MarkerOptions().position(location).title(task.getResult().getDocuments().get(i).get("PetName").toString()));
 
-                                    //gets a list of posts
-                                    String lost = task.getResult().getDocuments().get(i).get("lost").toString();
-                                    String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
-                                    HashMap UserName = (HashMap) (task.getResult().getDocuments().get(i).get("user"));
-                                    String details = task.getResult().getDocuments().get(i).get("details").toString();
-                                    String image = task.getResult().getDocuments().get(i).get("image").toString();
-                                    String lat = task.getResult().getDocuments().get(i).get("lat").toString();
-                                    String lng = task.getResult().getDocuments().get(i).get("lng").toString();
-                                    User u = new User(UserName.get("name").toString(), UserName.get("id").toString(), UserName.get("email").toString());
-                                    posts.add(new PetPost(lost, petName, u, details, image, lat, lng));
+                                        //gets a list of posts
+                                        String lost = task.getResult().getDocuments().get(i).get("lost").toString();
+                                        String petName = task.getResult().getDocuments().get(i).get("PetName").toString();
+                                        HashMap UserName = (HashMap) (task.getResult().getDocuments().get(i).get("user"));
+                                        String details = task.getResult().getDocuments().get(i).get("details").toString();
+                                        String image = task.getResult().getDocuments().get(i).get("image").toString();
+                                        String lat = task.getResult().getDocuments().get(i).get("lat").toString();
+                                        String lng = task.getResult().getDocuments().get(i).get("lng").toString();
+                                        User u = new User(UserName.get("name").toString(), UserName.get("id").toString(), UserName.get("email").toString());
+                                        posts.add(new PetPost(lost, petName, u, details, image, lat, lng));
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             });
